@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/adm/registrar', [admController::class, 'criar']);
 
+Route::post('/adm/login', [admController::class,'login']);
