@@ -1,0 +1,1 @@
+Coloque aqui componentes reutilizáveis, como Sidebar, Header, etc.
