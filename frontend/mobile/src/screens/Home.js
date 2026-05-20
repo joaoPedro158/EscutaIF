@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../services/api';
 import {
   View,
   Text,
@@ -60,21 +61,31 @@ export default function Home({ navigation }) {
     setProgresso(base > 100 ? 100 : base);
   }, [mood, curso, turno, ano, isDenuncia]);
 
-  const handleEnviar = () => {
-    if (!canSubmit || isLoading) return;
-
-    setIsLoading(true);
-
-    // Simulação do envio de dados para posterior integração com Axios/Laravel
-    console.log('Dados do Aluno enviados:', {
-      curso, turno, ano, genero, anonimo, nome, mood, isDenuncia, denunciaType, relato
-    });
-
-    setTimeout(() => {
-      setIsLoading(false);
-      navigation.navigate('Success');
-    }, 1500);
-  };
+   const handleEnviar = async () => {
+     if (!canSubmit || isLoading) return;
+     setIsLoading(true);
+     try {
+       // Monta o payload para o backend
+       const payload = {
+         curso,
+         turno,
+         ano,
+         genero,
+         anonimo,
+         nome: anonimo ? null : nome,
+         mood,
+         isDenuncia,
+         denunciaType: isDenuncia ? denunciaType : null,
+         relato: isDenuncia ? relato : null
+       };
+       await api.post('/denuncias', payload);
+       setIsLoading(false);
+       navigation.navigate('Success');
+     } catch (err) {
+       setIsLoading(false);
+       alert('Erro ao enviar registro. Tente novamente.');
+     }
+   };
 
   return (
       <SafeAreaView style={s.container}>

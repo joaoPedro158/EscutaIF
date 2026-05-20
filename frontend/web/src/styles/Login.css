@@ -1,0 +1,140 @@
+/* web/src/styles/Login.css */
+
+/* =========================================
+   Estrutura Principal
+   ========================================= */
+.recipiente-principal {
+    @apply flex min-h-screen w-full bg-gray-50 font-sans;
+}
+
+/* =========================================
+   Lado Esquerdo - Branding Institucional
+   ========================================= */
+.painel-esquerdo {
+    @apply hidden lg:flex w-1/2 bg-[#00682f] flex-col justify-between p-16 relative overflow-hidden;
+}
+
+.fundo-gradiente {
+    @apply absolute inset-0 bg-gradient-to-br from-transparent to-[#003818] opacity-80 z-0;
+}
+
+.cabecalho-marca {
+    @apply relative z-10 flex items-center w-full;
+}
+
+.logo-campus {
+    @apply h-28 w-auto max-w-full object-contain block;
+}
+
+.area-texto-central {
+    @apply relative z-10 pr-12;
+}
+
+.titulo-principal {
+    @apply text-white text-5xl font-extrabold tracking-tight leading-[1.1] mb-6;
+}
+
+.paragrafo-principal {
+    @apply text-green-50 text-lg font-medium leading-relaxed max-w-md opacity-90;
+}
+
+.rodape-esquerdo {
+    @apply relative z-10;
+}
+
+.texto-direitos {
+    @apply text-green-100 text-sm font-medium opacity-80;
+}
+
+/* =========================================
+   Lado Direito - Formulário
+   ========================================= */
+.painel-direito {
+    @apply flex-1 flex flex-col items-center justify-center p-8 relative;
+}
+
+.cartao-formulario {
+    @apply w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-10;
+}
+
+.cabecalho-formulario {
+    @apply mb-8;
+}
+
+.titulo-formulario {
+    @apply text-3xl font-extrabold text-gray-900 tracking-tight mb-2;
+}
+
+.subtitulo-formulario {
+    @apply text-gray-500 text-sm;
+}
+
+/* =========================================
+   Elementos de Input e Ações
+   ========================================= */
+.formulario-autenticacao {
+    @apply flex flex-col gap-5;
+}
+
+.grupo-entrada {
+    @apply flex flex-col gap-1.5;
+}
+
+.rotulo-entrada {
+    @apply text-sm font-bold text-gray-700;
+}
+
+.envoltorio-input {
+    @apply relative flex items-center;
+}
+
+.icone-input {
+    @apply absolute left-4 text-gray-400;
+}
+
+.campo-texto {
+    @apply w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00682f] focus:border-transparent transition-all bg-gray-50 text-gray-900;
+}
+
+.campo-senha {
+    @apply w-full pl-12 pr-12 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00682f] focus:border-transparent transition-all bg-gray-50 text-gray-900;
+}
+
+.botao-revelar-senha {
+    @apply absolute right-4 text-gray-400 hover:text-gray-600 focus:outline-none;
+}
+
+.cabecalho-senha {
+    @apply flex items-center justify-between;
+}
+
+.link-esqueceu-senha {
+    @apply text-xs font-bold text-[#00682f] hover:underline;
+}
+
+.botao-submeter {
+    @apply mt-2 w-full bg-[#004d22] hover:bg-[#003818] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg;
+}
+
+/* =========================================
+   Rodapé do Formulário (Alternar Modo)
+   ========================================= */
+.rodape-formulario {
+    @apply mt-8 pt-6 border-t border-gray-100 flex flex-col items-center gap-4;
+}
+
+.texto-alternar-modo {
+    @apply text-sm text-gray-600;
+}
+
+.botao-alternar-modo {
+    @apply ml-2 font-bold text-[#00682f] hover:underline focus:outline-none;
+}
+
+.texto-ajuda {
+    @apply text-xs text-gray-400 text-center;
+}
+
+.link-ajuda {
+    @apply font-bold text-[#00682f] hover:underline;
+}
