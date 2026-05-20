@@ -7,11 +7,15 @@ import {
     Eye,
     ArrowRight,
     User,
-    UserPlus
+    UserPlus,
+    Check,
+    X
 } from 'lucide-react';
 
 import '../styles/Login.css';
 import logoCampus from '../assets/Campus_Nova_Cruz_-_Logo_Color_Hor.original.png';
+import auth from '../services/auth';
+import api from '../services/axiosConfig';
 
 export default function Login({ onLoginSuccess }) {
     const [isLogin, setIsLogin] = useState(true);
@@ -20,40 +24,69 @@ export default function Login({ onLoginSuccess }) {
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
-        senha: '',
-        foto: null
+        senha: ''
+    });
+    const [errorMsg, setErrorMsg] = useState(null);
+    const [successMsg, setSuccessMsg] = useState(null);
+    const [passwordChecks, setPasswordChecks] = useState({
+        length: false,
+        uppercase: false,
+        lowercase: false,
+        number: false,
+        special: false
     });
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === 'foto') {
-            setFormData({ ...formData, foto: files[0] });
-        } else {
-            setFormData({ ...formData, [name]: value });
+        setFormData({ ...formData, [name]: value });
+        if (name === 'senha') {
+            // Atualiza checks da senha em tempo real
+            const checks = {
+                length: value.length >= 8,
+                uppercase: /[A-Z]/.test(value),
+                lowercase: /[a-z]/.test(value),
+                number: /[0-9]/.test(value),
+                special: /[^A-Za-z0-9]/.test(value)
+            };
+            setPasswordChecks(checks);
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        // reset messages
+        setErrorMsg(null);
+        setSuccessMsg(null);
+
         if (isLogin) {
-            console.log('Login efetuado:', { email: formData.email, senha: formData.senha });
-            // Dispara a navegação para o Dashboard
-            if (onLoginSuccess) {
-                onLoginSuccess();
+            // Real login via API
+            const result = await auth.login(formData.email, formData.senha);
+            if (result.success) {
+                setSuccessMsg('Login efetuado com sucesso. Redirecionando...');
+                if (onLoginSuccess) onLoginSuccess();
+            } else {
+                setErrorMsg(result.message || 'Falha no login');
             }
         } else {
-            // Envio com foto (FormData)
-            const data = new FormData();
-            data.append('nome', formData.nome);
-            data.append('email', formData.email);
-            data.append('senha', formData.senha);
-            if (formData.foto) {
-                data.append('foto', formData.foto);
+            // Registrar conta (backend espera: name, email, password)
+            try {
+                const payload = {
+                    name: formData.nome,
+                    email: formData.email,
+                    password: formData.senha
+                };
+                const response = await api.post('/adm/registrar', payload);
+                setSuccessMsg(response.data.message || 'Conta criada com sucesso');
+                // voltar ao modo login e limpar senha
+                setIsLogin(true);
+                setFormData({ nome: '', email: formData.email, senha: '' });
+            } catch (error) {
+                let msg = error.response?.data?.message || error.message || 'Erro ao criar conta';
+                if (typeof msg === 'string' && msg.includes('Server Error')) {
+                    msg = 'Erro no servidor. Tente novamente mais tarde.';
+                }
+                setErrorMsg(msg);
             }
-            // Aqui você faria o fetch/axios para o backend
-            console.log('Conta criada:', Object.fromEntries(data));
-            // Após criar a conta, retorna automaticamente para a tela de login
-            setIsLogin(true);
         }
     };
 
@@ -123,19 +156,6 @@ export default function Login({ onLoginSuccess }) {
                                         />
                                     </div>
                                 </div>
-                                {/* Campo: Foto */}
-                                <div className="grupo-entrada">
-                                    <label className="rotulo-entrada">Foto de Perfil (opcional)</label>
-                                    <div className="envoltorio-input">
-                                        <input
-                                            type="file"
-                                            name="foto"
-                                            accept="image/*"
-                                            onChange={handleChange}
-                                            className="campo-texto"
-                                        />
-                                    </div>
-                                </div>
                             </>
                         )}
 
@@ -173,7 +193,7 @@ export default function Login({ onLoginSuccess }) {
                                     onChange={handleChange}
                                     placeholder="••••••••"
                                     required
-                                    className="campo-senha"
+                                    className={`campo-senha ${!isLogin && Object.values(passwordChecks).every(Boolean) ? 'input-valid' : ''} ${errorMsg ? 'input-error' : ''}`}
                                 />
                                 <button
                                     type="button"
@@ -183,6 +203,25 @@ export default function Login({ onLoginSuccess }) {
                                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
                             </div>
+
+                            {/* Mensagens de erro/sucesso */}
+                            {errorMsg && (
+                                <div className="message-box message-error" role="alert">{errorMsg}</div>
+                            )}
+                            {successMsg && (
+                                <div className="message-box message-success" role="status">{successMsg}</div>
+                            )}
+
+                            {/* Requisitos de senha (apenas no registro) */}
+                            {!isLogin && (
+                                <ul className="password-requirements" aria-live="polite">
+                                    <li>{passwordChecks.length ? <Check size={14} className="req-icon req-ok" /> : <X size={14} className="req-icon req-fail" />} Mínimo 8 caracteres</li>
+                                    <li>{passwordChecks.uppercase ? <Check size={14} className="req-icon req-ok" /> : <X size={14} className="req-icon req-fail" />} Uma letra maiúscula</li>
+                                    <li>{passwordChecks.lowercase ? <Check size={14} className="req-icon req-ok" /> : <X size={14} className="req-icon req-fail" />} Uma letra minúscula</li>
+                                    <li>{passwordChecks.number ? <Check size={14} className="req-icon req-ok" /> : <X size={14} className="req-icon req-fail" />} Um número</li>
+                                    <li>{passwordChecks.special ? <Check size={14} className="req-icon req-ok" /> : <X size={14} className="req-icon req-fail" />} Um carácter especial</li>
+                                </ul>
+                            )}
                         </div>
 
                         {/* Botão de Envio */}

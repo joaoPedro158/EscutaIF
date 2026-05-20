@@ -54,10 +54,457 @@
 }
 
 .cabecalho-painel {
-    @apply flex items-center justify-between px-8 py-5 bg-white border-b border-gray-200 z-10 shadow-sm;
+    @apply flex items-center justify-between px-8 py-5 bg-white border-b border-gray-200 z-10;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.03) inset, 0 1px 0 rgba(0,0,0,0.02);
+}
+
+.titulo-cabecalho {/* web/src/styles/Dashboard.css */
+
+/* =========================================
+   Estrutura Principal do Painel
+   ========================================= */
+/* Fundo levemente acinzentado para destacar os cartões brancos */
+.recipiente-painel {
+    @apply flex h-screen w-full bg-[#eef2f1] text-gray-800 font-sans overflow-hidden;
+}
+
+/* =========================================
+   Barra Lateral (Sidebar)
+   ========================================= */
+.barra-lateral {
+    @apply w-64 bg-white border-r border-gray-200 flex flex-col justify-between z-20;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.02);
+}
+
+.cabecalho-logo {
+    @apply flex items-center gap-3 p-6 mb-2;
+}
+
+.icone-logo {
+    @apply w-10 h-10 bg-[#00682f] text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md;
+}
+
+.texto-logo {
+    @apply text-xl font-black text-[#00682f] leading-none;
+}
+
+.subtexto-logo {
+    @apply text-[11px] text-gray-400 font-bold uppercase tracking-wider mt-1;
+}
+
+.menu-navegacao {
+    @apply flex-1 px-4 flex flex-col gap-1.5 mt-4;
+}
+
+.item-menu {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all cursor-pointer w-full text-left border border-transparent;
+}
+
+/* O item ativo ganha fundo, cor e uma borda sutil para não se misturar */
+.item-menu-ativo {
+    @apply bg-[#f0fdf4] text-[#00682f] border-[#dcfce7] shadow-sm;
+}
+
+.rodape-lateral {
+    @apply p-4 border-t border-gray-100 bg-gray-50/50 mt-auto;
+}
+
+/* =========================================
+   Conteúdo Principal & Cabeçalho (Header)
+   ========================================= */
+.conteudo-principal {
+    @apply flex-1 flex flex-col overflow-hidden;
+}
+
+.cabecalho-painel {
+    @apply flex items-center justify-between px-8 py-5 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-10;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
 }
 
 .titulo-cabecalho {
+    @apply text-xl font-extrabold text-gray-900 tracking-tight;
+}
+
+.area-pesquisa {
+    @apply relative w-96 hidden md:block;
+}
+
+/* Input cinza para não se perder no cabeçalho branco */
+.input-pesquisa {
+    @apply w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#00682f] focus:bg-white focus:border-[#00682f] transition-all;
+}
+
+.icone-pesquisa {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-400;
+}
+
+.acoes-cabecalho {
+    @apply flex items-center gap-5;
+}
+
+.botao-acao {
+    @apply p-2.5 text-gray-500 bg-gray-50 border border-gray-100 hover:text-gray-900 hover:bg-gray-100 hover:border-gray-200 rounded-full transition-all relative cursor-pointer;
+}
+
+.bolinha-notificacao {
+    @apply absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white shadow-sm;
+}
+
+.avatar-usuario {
+    @apply w-10 h-10 rounded-full object-cover border-2 border-gray-200 shadow-sm cursor-pointer hover:border-[#00682f] transition-colors;
+}
+
+/* =========================================
+   Área de Trabalho e Títulos
+   ========================================= */
+.area-rolavel {
+    @apply flex-1 overflow-y-auto p-8;
+}
+
+.area-boas-vindas {
+    @apply mb-8;
+}
+
+.titulo-boas-vindas {
+    @apply text-4xl font-extrabold text-gray-900 mb-2 tracking-tight;
+}
+
+.subtitulo-boas-vindas {
+    @apply text-gray-500 text-lg font-medium;
+}
+
+.titulo-secao {
+    @apply text-xl font-bold text-gray-900 tracking-tight mb-5;
+}
+
+/* =========================================
+   Grid de Métricas e Cartões
+   ========================================= */
+.grid-metricas {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-8;
+}
+
+/* Cartões 100% brancos com bordas evidentes e sombras espalhadas */
+.cartao-metrica {
+    @apply bg-white p-6 rounded-2xl border border-gray-200 flex flex-col justify-between relative overflow-hidden;
+    box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cartao-metrica:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(0, 104, 47, 0.25);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+    box-shadow: 0 18px 40px -12px rgba(0, 104, 47, 0.18), 0 6px 18px rgba(15,23,42,0.08);
+}
+
+.detalhe-borda {
+    @apply absolute left-0 top-0 bottom-0 w-1.5;
+}
+
+.borda-vermelha {
+    @apply bg-red-500;
+}
+
+.cabecalho-metrica {
+    @apply flex justify-between items-start mb-2;
+}
+
+.titulo-metrica {
+    @apply text-[12px] font-bold text-gray-400 uppercase tracking-widest;
+}
+
+.icone-metrica {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center shadow-sm border border-gray-50;
+}
+
+.icone-verde-bg { @apply bg-[#f0fdf4] text-[#00682f]; }
+.icone-vermelho-bg { @apply bg-red-50 text-red-600; }
+.icone-azul-bg { @apply bg-blue-50 text-blue-600; }
+
+.valor-metrica {
+    @apply text-5xl font-black tracking-tighter text-gray-900;
+}
+
+.texto-verde { @apply text-[#00682f]; }
+.texto-vermelho { @apply text-red-600; }
+.texto-azul { @apply text-blue-600; }
+
+.rodape-metrica {
+    @apply mt-5 text-sm font-semibold flex items-center justify-between;
+}
+
+.rodape-positivo {
+    @apply text-green-600 flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-md;
+}
+
+.rodape-alerta {
+    @apply text-gray-500;
+}
+
+.barra-progresso-fundo {
+    @apply w-full h-2.5 bg-gray-100 rounded-full mt-4 overflow-hidden;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.barra-progresso-preenchimento-total {
+    @apply h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full w-[78%];
+}
+
+/* =========================================
+   Tabelas de Dados Robustas (Abas Ativas)
+   ========================================= */
+.container-tabela {
+    @apply bg-white rounded-2xl border border-gray-200 overflow-hidden w-full;
+    box-shadow: 0 4px 24px -4px rgba(0,0,0,0.04);
+}
+
+.tabela-dados {
+    @apply w-full text-sm text-left border-collapse;
+}
+
+.cabecalho-tabela {
+    @apply bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-200;
+}
+
+.celula-cabecalho {
+    @apply px-6 py-4;
+}
+
+.linha-tabela {
+    @apply border-b border-gray-100 hover:bg-gray-50/80 transition-colors;
+}
+
+.celula-tabela {
+    @apply px-6 py-4 text-gray-700 font-medium;
+}
+
+/* Emblemas de Status (Badges) */
+.emblema-status {
+    @apply inline-flex px-3 py-1.5 rounded-md text-[11px] font-extrabold uppercase tracking-widest shadow-sm;
+}
+
+.status-pendente { @apply bg-red-50 text-red-700 border border-red-200; }
+.status-analise { @apply bg-amber-50 text-amber-700 border border-amber-200; }
+.status-resolvido { @apply bg-green-50 text-green-700 border border-green-200; }
+
+/* =========================================
+   Formulários e Elementos de Filtro
+   ========================================= */
+.container-filtros {
+    @apply flex flex-wrap gap-4 mb-6 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm;
+}
+
+.seletor-filtro {
+    @apply bg-gray-50 border border-gray-200 text-gray-700 text-sm font-semibold rounded-xl focus:ring-2 focus:ring-[#00682f] focus:border-[#00682f] focus:bg-white outline-none p-3 shadow-sm transition-all;
+}
+
+.campo-formulario {
+    @apply w-full p-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#00682f] focus:border-[#00682f] focus:bg-white outline-none text-sm text-gray-800 transition-all font-medium shadow-sm;
+}
+
+.botao-salvar {
+    @apply px-6 py-3.5 bg-[#00682f] hover:bg-[#004d22] text-white font-extrabold rounded-xl text-sm transition-all shadow-[0_4px_12px_rgba(0,104,47,0.2)] hover:shadow-[0_6px_16px_rgba(0,104,47,0.3)] cursor-pointer border border-transparent;
+}
+
+/* =========================================
+   Layout de Blocos (Dashboard & Estatísticas)
+   ========================================= */
+.grid-conteudo {
+    @apply grid grid-cols-1 xl:grid-cols-3 gap-6;
+}
+
+.secao-bloco {
+    @apply bg-white p-7 rounded-2xl border border-gray-200 flex flex-col;
+    box-shadow: 0 4px 24px -4px rgba(0,0,0,0.04);
+    transition: box-shadow 250ms ease, transform 250ms ease;
+}
+
+.secao-bloco:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 119, 182, 0.22);
+    box-shadow: 0 18px 40px -12px rgba(0, 119, 182, 0.14), 0 8px 20px rgba(15,23,42,0.08);
+}
+
+.bloco-largo {
+    @apply xl:col-span-2;
+}
+
+.lista-itens {
+    @apply flex flex-col gap-3;
+}
+
+.cartao-item {
+    @apply p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-white hover:border-gray-200 transition-all flex gap-4 items-center justify-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.cartao-item:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+    border-color: rgba(0, 104, 47, 0.14);
+    box-shadow: 0 12px 24px -10px rgba(15,23,42,0.12), 0 4px 12px rgba(15,23,42,0.05);
+}
+
+.tag-curso {
+    @apply px-2.5 py-1 bg-white border border-gray-200 text-gray-600 text-[10px] font-extrabold rounded-md uppercase tracking-widest shadow-sm;
+}
+
+/* Modificadores Dinâmicos de Altura (Gráficos em Lista) */
+.barra-estatistica-fundo { @apply w-full bg-gray-100 h-3 rounded-full mt-2 overflow-hidden; box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08); }
+.barra-estatistica-tads { @apply h-full bg-gradient-to-r from-[#00682f] to-[#009242] rounded-full w-[85%]; }
+.barra-estatistica-info { @apply h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full w-[70%]; }
+.barra-estatistica-adm { @apply h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full w-[45%]; }
+
+/* =========================================
+   Rodapé (Footer)
+   ========================================= */
+.rodape-painel {
+    @apply flex flex-col sm:flex-row justify-between items-center px-8 py-6 border-t border-gray-200 text-sm font-medium text-gray-500 bg-[#eef2f1] gap-4 mt-auto;
+}
+
+.links-rodape {
+    @apply flex gap-6;
+}
+
+.link-rodape {
+    @apply hover:text-[#00682f] transition-colors cursor-pointer;
+}
+
+/* =========================================
+   ABA RESPOSTAS DOS ALUNOS
+   ========================================= */
+.cabecalho-respostas {
+    @apply flex items-start justify-between mb-6;
+}
+
+.titulo-respostas {
+    @apply text-3xl font-extrabold text-gray-900 tracking-tight mb-1;
+}
+
+.subtitulo-respostas {
+    @apply text-sm text-gray-500 font-medium max-w-xl;
+}
+
+.botao-exportar {
+    @apply flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 text-gray-700 hover:text-[#00682f] hover:border-[#00682f] hover:bg-green-50 font-bold text-sm rounded-xl transition-all cursor-pointer shadow-sm flex-shrink-0;
+}
+
+/* Barra de Filtros */
+.barra-filtros {
+    @apply flex flex-wrap items-end gap-5 bg-white border border-gray-200 rounded-2xl px-6 py-5 mb-6 shadow-sm;
+}
+
+.grupo-filtro {
+    @apply flex flex-col gap-1.5;
+}
+
+.rotulo-filtro {
+    @apply text-[10px] font-bold text-gray-400 uppercase tracking-widest;
+}
+
+.seletor-filtro-respostas, .campo-data-filtro {
+    @apply bg-gray-50 border border-gray-200 text-gray-700 text-sm font-bold rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#00682f] focus:border-[#00682f] focus:bg-white transition-all shadow-sm cursor-pointer;
+}
+
+.botao-limpar-filtros {
+    @apply ml-auto flex items-center gap-2 text-gray-400 font-bold text-sm bg-transparent border-none cursor-pointer hover:text-red-500 transition-colors p-2;
+}
+
+/* Container e Tabela de Respostas */
+.container-tabela-respostas {
+    @apply bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden;
+}
+
+.tabela-respostas {
+    @apply w-full border-collapse text-sm;
+}
+
+.th-respostas {
+    @apply bg-gray-50 text-gray-500 text-[11px] font-extrabold uppercase tracking-widest px-6 py-4 text-left border-b border-gray-200;
+}
+
+.linha-respostas {
+    @apply border-b border-gray-100 hover:bg-gray-50/80 transition-colors;
+}
+
+.td-respostas {
+    @apply px-6 py-4 text-gray-700 font-medium align-middle;
+}
+
+/* Célula Data */
+.data-principal {
+    @apply block font-extrabold text-gray-900 text-sm;
+}
+
+.hora-secundaria {
+    @apply block text-[11px] font-bold text-gray-400 mt-0.5;
+}
+
+/* Célula Gênero */
+.celula-genero {
+    @apply flex items-center gap-1.5 text-gray-500 font-semibold;
+}
+
+/* Badges de Curso */
+.badge-curso {
+    @apply inline-block px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest border;
+}
+
+.badge-curso-info  { @apply bg-blue-50 text-blue-700 border-blue-200; }
+.badge-curso-adm   { @apply bg-indigo-50 text-indigo-700 border-indigo-200; }
+.badge-curso-tads  { @apply bg-green-50 text-green-700 border-green-200; }
+.badge-curso-quim  { @apply bg-gray-50 text-gray-700 border-gray-300; }
+.badge-curso-tpq   { @apply bg-pink-50 text-pink-700 border-pink-200; }
+
+/* Emblemas de Humor (Estado Emocional) */
+.emblema-humor {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-extrabold tracking-wide shadow-sm;
+}
+
+.humor-muito-feliz  { @apply bg-green-50 text-green-700 border border-green-200; }
+.humor-feliz        { @apply bg-green-50 text-green-700 border border-green-200; }
+.humor-neutro       { @apply bg-orange-50 text-orange-700 border border-orange-200; }
+.humor-triste       { @apply bg-red-50 text-red-700 border border-red-200; }
+.humor-muito-triste { @apply bg-gray-800 text-white border border-gray-900; }
+
+/* Botão de Ação (Olho) */
+.botao-ver {
+    @apply w-8 h-8 flex items-center justify-center rounded-lg bg-gray-50 border border-gray-200 text-gray-400 hover:text-[#00682f] hover:border-[#00682f] hover:bg-green-50 cursor-pointer transition-all;
+}
+
+/* Paginação */
+.rodape-paginacao {
+    @apply flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50;
+}
+
+.info-paginacao {
+    @apply text-sm font-medium text-gray-500;
+}
+
+.info-paginacao strong {
+    @apply text-gray-900 font-extrabold;
+}
+
+.controles-paginacao {
+    @apply flex items-center gap-1.5;
+}
+
+.btn-pagina {
+    @apply w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-bold text-gray-600 cursor-pointer hover:bg-gray-50 hover:border-gray-300 shadow-sm transition-all;
+}
+
+.btn-pagina-ativo {
+    @apply w-9 h-9 flex items-center justify-center rounded-lg border bg-[#00682f] text-white border-[#00682f] text-sm font-bold cursor-pointer shadow-md;
+}
+
+/* Efeito Hover Global para Containers */
+.cartao-metrica:hover,
+.secao-bloco:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -4px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+    border-color: #d1d5db;
+}
     @apply text-xl font-extrabold text-gray-900 tracking-tight;
 }
 
@@ -79,6 +526,7 @@
 
 .botao-acao {
     @apply p-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer;
+    box-shadow: 0 4px 12px rgba(2,6,23,0.04);
 }
 
 .bolinha-notificacao {
@@ -120,7 +568,9 @@
 }
 
 .cartao-metrica {
-    @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden;
+    @apply bg-white p-6 rounded-2xl border border-gray-100 flex flex-col justify-between relative overflow-hidden;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15,23,42,0.04);
+    transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .detalhe-borda {
@@ -179,7 +629,8 @@
    Tabelas de Dados Robustas (Abas Ativas)
    ========================================= */
 .container-tabela {
-    @apply bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden w-full;
+    @apply bg-white rounded-2xl border border-gray-200 overflow-hidden w-full;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.04);
 }
 
 .tabela-dados {
@@ -238,7 +689,9 @@
 }
 
 .secao-bloco {
-    @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col;
+    @apply bg-white p-6 rounded-2xl border border-gray-100 flex flex-col;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+    transition: box-shadow 220ms ease, transform 220ms ease;
 }
 
 .bloco-largo {
@@ -251,6 +704,8 @@
 
 .cartao-item {
     @apply p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors flex gap-4 items-center justify-between;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.04);
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 
 .tag-curso {
@@ -435,4 +890,12 @@
 
 .reticencias-pagina {
     @apply w-8 text-center text-gray-400 text-sm;
+}
+
+/* Hover lift for prominent containers */
+.cartao-metrica:hover,
+.cartao-item:hover,
+.secao-bloco:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(15,23,42,0.08);
 }
