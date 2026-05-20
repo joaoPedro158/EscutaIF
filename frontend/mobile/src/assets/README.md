@@ -1,0 +1,1 @@
+Esta pasta deve conter logos, fontes e imagens do IFRN para o app mobile.
