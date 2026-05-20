@@ -1,0 +1,1 @@
+Esta pasta deve conter logos e ícones para o painel web.

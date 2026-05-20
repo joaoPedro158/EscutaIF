@@ -1,0 +1,1 @@
+Coloque aqui arquivos de estilo global, como global.css.

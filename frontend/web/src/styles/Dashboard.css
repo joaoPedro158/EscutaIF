@@ -1,0 +1,438 @@
+/* web/src/styles/Dashboard.css */
+
+/* =========================================
+   Estrutura Principal do Painel
+   ========================================= */
+.recipiente-painel {
+    @apply flex h-screen w-full bg-[#f4f7f6] text-gray-800 font-sans overflow-hidden;
+}
+
+/* =========================================
+   Barra Lateral (Sidebar)
+   ========================================= */
+.barra-lateral {
+    @apply w-64 bg-[#f8f9fa] border-r border-gray-200 flex flex-col justify-between z-20;
+}
+
+.cabecalho-logo {
+    @apply flex items-center gap-3 p-6 mb-2;
+}
+
+.icone-logo {
+    @apply w-10 h-10 bg-[#00682f] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-sm;
+}
+
+.texto-logo {
+    @apply text-xl font-bold text-[#00682f] leading-none;
+}
+
+.subtexto-logo {
+    @apply text-[11px] text-gray-500 font-bold uppercase tracking-wider mt-1;
+}
+
+.menu-navegacao {
+    @apply flex-1 px-4 flex flex-col gap-1.5;
+}
+
+.item-menu {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors cursor-pointer w-full text-left;
+}
+
+.item-menu-ativo {
+    @apply bg-[#e5f0ea] text-[#00682f] hover:bg-[#d5e8de];
+}
+
+.rodape-lateral {
+    @apply p-4 border-t border-gray-200/60;
+}
+
+/* =========================================
+   Conteúdo Principal & Cabeçalho (Header)
+   ========================================= */
+.conteudo-principal {
+    @apply flex-1 flex flex-col overflow-hidden;
+}
+
+.cabecalho-painel {
+    @apply flex items-center justify-between px-8 py-5 bg-white border-b border-gray-200 z-10 shadow-sm;
+}
+
+.titulo-cabecalho {
+    @apply text-xl font-extrabold text-gray-900 tracking-tight;
+}
+
+.area-pesquisa {
+    @apply relative w-96 hidden md:block;
+}
+
+.input-pesquisa {
+    @apply w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#00682f] focus:bg-white transition-all;
+}
+
+.icone-pesquisa {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-400;
+}
+
+.acoes-cabecalho {
+    @apply flex items-center gap-5;
+}
+
+.botao-acao {
+    @apply p-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors relative cursor-pointer;
+}
+
+.bolinha-notificacao {
+    @apply absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white;
+}
+
+.avatar-usuario {
+    @apply w-10 h-10 rounded-full object-cover border-2 border-gray-200 shadow-sm cursor-pointer;
+}
+
+/* =========================================
+   Área de Trabalho e Títulos
+   ========================================= */
+.area-rolavel {
+    @apply flex-1 overflow-y-auto p-8;
+}
+
+.area-boas-vindas {
+    @apply mb-8;
+}
+
+.titulo-boas-vindas {
+    @apply text-4xl font-extrabold text-gray-900 mb-2 tracking-tight;
+}
+
+.subtitulo-boas-vindas {
+    @apply text-gray-600 text-lg;
+}
+
+.titulo-secao {
+    @apply text-2xl font-bold text-gray-900 tracking-tight mb-6;
+}
+
+/* =========================================
+   Grid de Métricas e Cartões
+   ========================================= */
+.grid-metricas {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-8;
+}
+
+.cartao-metrica {
+    @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden;
+}
+
+.detalhe-borda {
+    @apply absolute left-0 top-0 bottom-0 w-1;
+}
+
+.borda-vermelha {
+    @apply bg-red-600;
+}
+
+.cabecalho-metrica {
+    @apply flex justify-between items-start mb-2;
+}
+
+.titulo-metrica {
+    @apply text-[13px] font-bold text-gray-500 uppercase tracking-wider;
+}
+
+.icone-metrica {
+    @apply w-12 h-12 rounded-full flex items-center justify-center;
+}
+
+.icone-verde-bg { @apply bg-[#e5f0ea] text-[#00682f]; }
+.icone-vermelho-bg { @apply bg-red-50 text-red-600; }
+.icone-azul-bg { @apply bg-blue-50 text-blue-600; }
+
+.valor-metrica {
+    @apply text-5xl font-black tracking-tight;
+}
+
+.texto-verde { @apply text-[#00682f]; }
+.texto-vermelho { @apply text-red-600; }
+.texto-azul { @apply text-[#0077b6]; }
+
+.rodape-metrica {
+    @apply mt-4 text-sm font-semibold;
+}
+
+.rodape-positivo {
+    @apply text-green-500 flex items-center gap-1;
+}
+
+.rodape-alerta {
+    @apply text-gray-600;
+}
+
+.barra-progresso-fundo {
+    @apply w-full h-3 bg-gray-100 rounded-full mt-4 overflow-hidden;
+}
+
+.barra-progresso-preenchimento-total {
+    @apply h-full bg-[#0077b6] rounded-full w-[78%];
+}
+
+/* =========================================
+   Tabelas de Dados Robustas (Abas Ativas)
+   ========================================= */
+.container-tabela {
+    @apply bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden w-full;
+}
+
+.tabela-dados {
+    @apply w-full text-sm text-left border-collapse;
+}
+
+.cabecalho-tabela {
+    @apply bg-gray-50 text-gray-500 text-xs font-bold uppercase tracking-wider border-b border-gray-200;
+}
+
+.celula-cabecalho {
+    @apply px-6 py-4;
+}
+
+.linha-tabela {
+    @apply border-b border-gray-100 hover:bg-gray-50/80 transition-colors;
+}
+
+.celula-tabela {
+    @apply px-6 py-4 text-gray-700 font-medium;
+}
+
+/* Emblemas de Status (Badges) */
+.emblema-status {
+    @apply inline-flex px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide;
+}
+
+.status-pendente { @apply bg-red-50 text-red-700 border border-red-100; }
+.status-analise { @apply bg-amber-50 text-amber-700 border border-amber-100; }
+.status-resolvido { @apply bg-green-50 text-green-700 border border-green-100; }
+
+/* =========================================
+   Formulários e Elementos de Filtro
+   ========================================= */
+.container-filtros {
+    @apply flex flex-wrap gap-4 mb-6 bg-white p-4 rounded-xl border border-gray-200 shadow-sm;
+}
+
+.seletor-filtro {
+    @apply bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-xl focus:ring-2 focus:ring-[#00682f] focus:outline-none p-2.5 font-semibold;
+}
+
+.campo-formulario {
+    @apply w-full p-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#00682f] focus:bg-white outline-none text-sm text-gray-800 transition-all font-medium;
+}
+
+.botao-salvar {
+    @apply px-6 py-3 bg-[#00682f] hover:bg-[#004d22] text-white font-bold rounded-xl text-sm transition-all shadow-md cursor-pointer;
+}
+
+/* =========================================
+   Layout de Blocos (Dashboard & Estatísticas)
+   ========================================= */
+.grid-conteudo {
+    @apply grid grid-cols-1 xl:grid-cols-3 gap-6;
+}
+
+.secao-bloco {
+    @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col;
+}
+
+.bloco-largo {
+    @apply xl:col-span-2;
+}
+
+.lista-itens {
+    @apply flex flex-col gap-4;
+}
+
+.cartao-item {
+    @apply p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors flex gap-4 items-center justify-between;
+}
+
+.tag-curso {
+    @apply px-2.5 py-1 bg-gray-200 text-gray-700 text-[11px] font-extrabold rounded-md uppercase tracking-wider;
+}
+
+/* Modificadores Dinâmicos de Altura (Gráficos em Lista) */
+.barra-estatistica-fundo { @apply w-full bg-gray-100 h-2.5 rounded-full mt-2 overflow-hidden; }
+.barra-estatistica-tads { @apply h-full bg-[#00682f] rounded-full w-[85%]; }
+.barra-estatistica-info { @apply h-full bg-[#0077b6] rounded-full w-[70%]; }
+.barra-estatistica-adm { @apply h-full bg-amber-500 rounded-full w-[45%]; }
+
+/* =========================================
+   Rodapé (Footer)
+   ========================================= */
+.rodape-painel {
+    @apply flex flex-col sm:flex-row justify-between items-center px-8 py-6 border-t border-gray-200 text-sm text-gray-500 bg-[#f4f7f6] gap-4 mt-auto;
+}
+
+.links-rodape {
+    @apply flex gap-6;
+}
+
+.link-rodape {
+    @apply hover:text-gray-900 font-medium transition-colors cursor-pointer;
+}
+
+/* =========================================
+   ABA RESPOSTAS DOS ALUNOS
+   ========================================= */
+
+/* Cabeçalho da página Respostas */
+.cabecalho-respostas {
+    @apply flex items-start justify-between mb-6;
+}
+
+.titulo-respostas {
+    @apply text-3xl font-extrabold text-gray-900 tracking-tight mb-1;
+}
+
+.subtitulo-respostas {
+    @apply text-sm text-gray-500 max-w-xl;
+}
+
+.botao-exportar {
+    @apply flex items-center gap-2 px-5 py-2.5 bg-[#00682f] hover:bg-[#004d22]
+    text-white font-bold text-sm rounded-xl transition-colors cursor-pointer
+    shadow-sm flex-shrink-0 border-0;
+}
+
+/* Barra de Filtros */
+.barra-filtros {
+    @apply flex flex-wrap items-end gap-5 bg-white border border-gray-200
+    rounded-2xl px-5 py-4 mb-5 shadow-sm;
+}
+
+.grupo-filtro {
+    @apply flex flex-col gap-1;
+}
+
+.rotulo-filtro {
+    @apply text-[10px] font-bold text-gray-400 uppercase tracking-widest;
+}
+
+.seletor-filtro-respostas {
+    @apply bg-gray-50 border border-gray-300 text-gray-700 text-sm font-semibold
+    rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#00682f]
+    cursor-pointer;
+}
+
+.campo-data-filtro {
+    @apply bg-gray-50 border border-gray-300 text-gray-700 text-sm font-semibold
+    rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#00682f];
+}
+
+.botao-limpar-filtros {
+    @apply ml-auto flex items-center gap-2 text-[#00682f] font-bold text-sm
+    bg-transparent border-none cursor-pointer hover:text-[#004d22] transition-colors;
+}
+
+/* Container e Tabela de Respostas */
+.container-tabela-respostas {
+    @apply bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden;
+}
+
+.tabela-respostas {
+    @apply w-full border-collapse text-sm;
+}
+
+.th-respostas {
+    @apply bg-gray-50 text-gray-400 text-[11px] font-bold uppercase tracking-widest
+    px-5 py-3.5 text-left border-b border-gray-200;
+}
+
+.linha-respostas {
+    @apply border-b border-gray-100 hover:bg-gray-50/70 transition-colors;
+}
+
+.linha-respostas:last-child {
+    border-bottom: none;
+}
+
+.td-respostas {
+    @apply px-5 py-4 text-gray-700 font-medium align-middle;
+}
+
+/* Célula Data */
+.data-principal {
+    @apply block font-bold text-gray-900 text-sm;
+}
+
+.hora-secundaria {
+    @apply block text-[11px] text-gray-400 mt-0.5;
+}
+
+/* Célula Gênero */
+.celula-genero {
+    @apply flex items-center gap-1.5 text-gray-600;
+}
+
+/* Badges de Curso */
+.badge-curso {
+    @apply inline-block px-2.5 py-1 rounded-md text-[11px] font-extrabold
+    uppercase tracking-wide;
+}
+
+.badge-curso-info  { @apply bg-blue-100 text-blue-700; }
+.badge-curso-adm   { @apply bg-indigo-100 text-indigo-700; }
+.badge-curso-tads  { @apply bg-green-100 text-green-700; }
+.badge-curso-quim  { @apply bg-gray-200 text-gray-700; }
+.badge-curso-tpq   { @apply bg-pink-100 text-pink-700; }
+
+/* Emblemas de Humor (Estado Emocional) */
+.emblema-humor {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+    text-xs font-bold;
+}
+
+.humor-muito-feliz  { @apply bg-green-100 text-green-700 border border-green-200; }
+.humor-feliz        { @apply bg-green-100 text-green-700 border border-green-200; }
+.humor-neutro       { @apply bg-orange-50 text-orange-700 border border-orange-200; }
+.humor-triste       { @apply bg-red-100 text-red-700 border border-red-200; }
+.humor-muito-triste { @apply bg-gray-900 text-white; }
+
+/* Botão de Ação (Olho) */
+.botao-ver {
+    @apply text-gray-400 hover:text-gray-700 bg-transparent border-none
+    cursor-pointer text-lg transition-colors p-0;
+}
+
+/* Paginação */
+.rodape-paginacao {
+    @apply flex items-center justify-between px-5 py-3.5 border-t border-gray-100;
+}
+
+.info-paginacao {
+    @apply text-sm text-gray-500;
+}
+
+.info-paginacao strong {
+    @apply text-gray-900 font-bold;
+}
+
+.controles-paginacao {
+    @apply flex items-center gap-1;
+}
+
+.btn-pagina {
+    @apply w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200
+    bg-white text-sm font-semibold text-gray-600 cursor-pointer
+    hover:bg-gray-50 transition-colors;
+}
+
+.btn-pagina-ativo {
+    @apply w-8 h-8 flex items-center justify-center rounded-lg border
+    bg-[#00682f] text-white border-[#00682f] text-sm font-semibold cursor-pointer;
+}
+
+.btn-seta {
+    @apply text-base;
+}
+
+.reticencias-pagina {
+    @apply w-8 text-center text-gray-400 text-sm;
+}

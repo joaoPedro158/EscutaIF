@@ -1,0 +1,1 @@
+Coloque aqui hooks customizados, como useAuth, useMood, etc.
