@@ -21,17 +21,6 @@ function probePort(port) {
   });
 }
 
-async function resolveBackendTarget() {
-  if (await probePort(8080)) {
-    return 'http://127.0.0.1:8080';
-  }
-
-  if (await probePort(8000)) {
-    return 'http://127.0.0.1:8000';
-  }
-
-  return 'http://127.0.0.1:8080';
-}
 
 export default defineConfig(async () => ({
   server: {
@@ -40,7 +29,7 @@ export default defineConfig(async () => ({
     strictPort: true,
     proxy: {
       '/api': {
-        target: await resolveBackendTarget(),
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
       },
