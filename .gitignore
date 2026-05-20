@@ -40,3 +40,4 @@ Thumbs.db
 
 *.log
 .eslintcache
+backend/config/cors.php
