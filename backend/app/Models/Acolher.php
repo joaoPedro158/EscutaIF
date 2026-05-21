@@ -15,6 +15,7 @@ use App\Enum\curso;
 class Acolher extends Model
 {
     use HasFactory, Notifiable;
+    protected $table = 'acolher';
 
     protected function casts() : array {
         return [

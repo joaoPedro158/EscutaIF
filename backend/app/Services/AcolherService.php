@@ -20,11 +20,12 @@ class AcolherService
             'nome'   => 'nullable|string|max:255',
             'genero' => ['nullable', new Enum(Genero::class)],
             'curso'  => ['required', new Enum(Curso::class)],
-            'periodo'=> ['required', 'string'],
+            'periodo'=> ['required', 'integer', 'min:1'],
             'turno'  => ['required', new Enum(Turno::class)],
             'humor'  => ['required', new Enum(Humor::class)],
         ])->validate();
-
-        return Acolher::create($dadosValidos);
+        $dadosSalvos =  Acolher::create($dadosValidos);
+        
+        return $dadosSalvos;
     }
 }

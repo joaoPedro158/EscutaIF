@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Acolher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\AcolherService;

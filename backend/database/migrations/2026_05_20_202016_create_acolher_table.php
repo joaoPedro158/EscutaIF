@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('turno');
             $table->string('humor');
             $table->string('curso');
-            $table->string('periodo');
+            $table->integer('periodo')->unsigned();
             $table->timestamps();
         });
     }
