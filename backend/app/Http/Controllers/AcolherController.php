@@ -19,10 +19,15 @@ class AcolherController extends Controller
     {
         $acolhido = $this->acolherService->registra($request->all());
 
-
-
         return response()->json(['message' => 'Acolhido criado com sucesso!',
                                     'data' => $acolhido], 201);
+    }
 
+    public function listar() : JsonResponse
+    {
+        $acolhidos = $this->acolherService->listar();
+
+        return response()->json(['message' => 'Acolhidos listados com sucesso!',
+                                    'data' => $acolhidos], 200);
     }
 }
