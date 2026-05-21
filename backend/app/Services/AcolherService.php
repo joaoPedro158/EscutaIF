@@ -25,7 +25,12 @@ class AcolherService
             'humor'  => ['required', new Enum(Humor::class)],
         ])->validate();
         $dadosSalvos =  Acolher::create($dadosValidos);
-        
+
         return $dadosSalvos;
+    }
+
+    public function listar() : array
+    {
+        return Acolher::all()->toArray();
     }
 }
