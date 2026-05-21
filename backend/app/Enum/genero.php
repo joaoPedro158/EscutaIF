@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Enum;
+
+enum genero : string
+{
+    case MASCULINO = 'masculino';
+    case FEMININO = 'feminino';
+    case OUTRO = 'outro';
+}
