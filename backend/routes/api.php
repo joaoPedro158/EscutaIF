@@ -15,4 +15,4 @@ Route::post('/adm/login', [admController::class,'login']);
 
 // Rotas para o controlador de acolhimento
 Route::post('/acolher/from', [AcolherController::class, 'criar']);
-Route::get('/acolher/listar', [AcolherController::class, 'listar']);
+Route::get('/acolher/listar', [AcolherController::class, 'listar'])->middleware('auth:sanctum');

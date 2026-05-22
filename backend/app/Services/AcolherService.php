@@ -8,6 +8,7 @@ use App\Enum\Genero;
 use App\Enum\Curso;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class AcolherService
@@ -29,8 +30,9 @@ class AcolherService
         return $dadosSalvos;
     }
 
-    public function listar() : array
+    public function listar() :LengthAwarePaginator
     {
-        return Acolher::all()->toArray();
+        $alunos = Acolher::orderBy('created_at', 'desc')->paginate(10);
+        return $alunos;
     }
 }
