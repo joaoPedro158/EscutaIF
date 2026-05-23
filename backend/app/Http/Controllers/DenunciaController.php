@@ -22,4 +22,11 @@ class DenunciaController extends Controller
 
         return response()->json($denuncia, 201);
     }
+
+    public function listar() : JsonResponse
+    {
+        $denuncias = $this->denunciaService->listar();
+
+        return response()->json($denuncias);
+    }
 }

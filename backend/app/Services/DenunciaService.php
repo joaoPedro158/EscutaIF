@@ -19,9 +19,14 @@ class DenunciaService
             'tipo'   => ['required', new Enum(tipodenuncia::class)],
             'descricao' => 'required|string'
         ])->validate();
-        
+
         $dadosSalvos =  Denuncia::create($dadosValidos);
 
         return $dadosSalvos;
+    }
+
+    public function listar(): LengthAwarePaginator
+    {
+        return Denuncia::orderBy('created_at', 'desc')->paginate(10);
     }
 }

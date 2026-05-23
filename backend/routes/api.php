@@ -19,4 +19,5 @@ Route::post('/acolher/form', [AcolherController::class, 'criar']);
 Route::get('/acolher/listar', [AcolherController::class, 'listar'])->middleware('auth:sanctum');
 
 // denuncia
-Route::post('/denuncia/form', [DenunciaController::class, 'criar'])->middleware('auth:sanctum');
+Route::post('/denuncia/form', [DenunciaController::class, 'criar']);
+Route::get('/denuncia/listar', [DenunciaController::class, 'listar'])->middleware('auth:sanctum');

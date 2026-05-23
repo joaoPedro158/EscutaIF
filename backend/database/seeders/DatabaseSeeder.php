@@ -24,6 +24,6 @@ class DatabaseSeeder extends Seeder
             'password' => '123',
         ]);
 
-        Acolher::factory()->count(50)->create();
+
     }
 }
