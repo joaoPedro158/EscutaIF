@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use App\Enum\tipodenuncia;
 
-#[Fillable(['nome', 'tipo', 'descricao'])]
+#[Fillable(['nome', 'tipo', 'descricao','data_ocorrencia'])]
 class Denuncia extends Model
 {
     use HasFactory, Notifiable;
