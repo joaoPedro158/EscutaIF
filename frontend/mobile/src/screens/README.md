@@ -1,1 +1,0 @@
-Coloque aqui as telas do app, como Home, Denuncia, Sucesso, etc.

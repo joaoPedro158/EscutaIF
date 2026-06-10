@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('denuncia', function (Blueprint $table) {
             $table->id();
-            $table->string('nome')->nullable();
             $table->string('tipo');
             $table->text('descricao');
+            $table->dateTime('data_ocorrencia')->nullable();
             $table->timestamps();
         });
     }
