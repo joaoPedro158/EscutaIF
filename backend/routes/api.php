@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcolherController;
-use App\Http\Controllers\admController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DenunciaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,8 +11,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Rotas para o controlador de administração
-Route::post('/adm/registrar', [admController::class, 'criar']);
-Route::post('/adm/login', [admController::class,'login']);
+Route::post('/adm/registrar', [UserController::class, 'criar']);
+Route::post('/adm/login', [UserController::class,'login']);
 
 // Rotas para o controlador de acolhimento
 Route::post('/acolher/form', [AcolherController::class, 'criar']);
