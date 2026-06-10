@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome')->nullable();
             $table->string('tipo');
             $table->text('descricao');
+            $table->dateTime('data_ocorrencia')->nullable();
             $table->timestamps();
         });
     }

@@ -1,9 +1,0 @@
-@import './Dashboard.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-body {
-  background: #f5f5f5;
-}

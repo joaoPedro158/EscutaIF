@@ -17,6 +17,7 @@ class DenunciaService
        $dadosValidos = Validator::make($dados, [
             'nome'   => 'nullable|string|max:255',
             'tipo'   => ['required', new Enum(tipodenuncia::class)],
+            'data_ocorrencia' => 'nullable|date',
             'descricao' => 'required|string'
         ])->validate();
 
