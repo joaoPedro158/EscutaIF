@@ -2,7 +2,7 @@ import MobileLayout from '../layout/MobileLayout';
 function Home() {
       return (
     <MobileLayout>
-      <h1>Página Inicial</h1>
+      <h1 className="text-[var(--primary)]">Página Inicial</h1>
     </MobileLayout>
   );
 }
