@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #1A6B4A;
+  --primary: #00694c;
+  --color-ifrn: #004384;
+  --color-text: #3d4943;
+  --color-heading: #1b1c19;
+  --color-accent: #fcaa33;
+  --color-border: #bccac1;
+  --color-surface: #f7f9f8;
 
-  --cor-linha:#bccac14c;
+  --cor-linha: #bccac14c;
   --shadow-card: 0 10px 40px -10px rgba(0, 105, 76, 0.08);
 }
 
 body {
   margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: var(--color-text);
+  background-color: #fbf9f4;
 }

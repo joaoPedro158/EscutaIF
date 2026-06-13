@@ -1,18 +1,22 @@
-import Header from "../components/Header";
+import { useState } from 'react'
+import Header from '../components/Header'
+import Sidebar from '../components/Sidebar'
+import BottomNav from '../components/BottomNav'
 
 export default function MobileLayout({ children }) {
-
-  function abrirMenu() {
-    console.log("Abrir menu");
-  }
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div>
-      <Header onMenuToggle={abrirMenu} />
+    <div className="min-h-screen bg-[#fbf9f4]">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main>
-        {children}
-      </main>
+      <div className="flex min-h-screen flex-col lg:ml-72">
+        <Header onMenuToggle={() => setSidebarOpen(true)} />
+
+        <main className="flex-1 overflow-x-clip pb-24 lg:pb-8">{children}</main>
+
+        <BottomNav />
+      </div>
     </div>
-  );
+  )
 }
