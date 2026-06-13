@@ -4,6 +4,7 @@
   --primary: #1A6B4A;
 
   --cor-linha:#bccac14c;
+  --shadow-card: 0 10px 40px -10px rgba(0, 105, 76, 0.08);
 }
 
 body {
