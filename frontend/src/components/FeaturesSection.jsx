@@ -9,6 +9,7 @@ const features = [
     title: 'Escuta Qualificada',
     description:
       'Profissionais capacitados para acolher suas demandas emocionais e pedagógicas com sigilo absoluto.',
+    link: '/acolhimento',
   },
   {
     icon: HandHeart,
@@ -17,6 +18,7 @@ const features = [
     title: 'Apoio em Rede',
     description:
       'Conectamos você aos serviços de saúde e assistência social do IFRN e da região de Nova Cruz.',
+    link: '/acolhimento',
   },
   {
     icon: ShieldCheck,
@@ -25,6 +27,7 @@ const features = [
     title: 'Canal Seguro',
     description:
       'Sua denúncia é tratada com rigor ético, garantindo a proteção contra qualquer tipo de retaliação.',
+    link: '/denuncia',
   },
 ]
 
