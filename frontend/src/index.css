@@ -8,14 +8,21 @@
   --color-accent: #fcaa33;
   --color-border: #bccac1;
   --color-surface: #f7f9f8;
+  --color-surface-strong: #ffffff;
+  --color-surface-muted: #fbf9f4;
+  --color-soft-green: rgba(0, 105, 76, 0.08);
+  --color-soft-warm: rgba(252, 170, 51, 0.18);
+  --color-soft-line: rgba(188, 202, 193, 0.3);
+  --color-soft-border: #f0eee9;
 
   --cor-linha: #bccac14c;
   --shadow-card: 0 10px 40px -10px rgba(0, 105, 76, 0.08);
+  --shadow-panel: 0 20px 40px -20px rgba(27, 28, 25, 0.18);
 }
 
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   color: var(--color-text);
-  background-color: #fbf9f4;
+  background-color: var(--color-surface-muted);
 }
