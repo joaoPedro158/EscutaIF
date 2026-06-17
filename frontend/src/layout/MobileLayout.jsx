@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
-import BottomNav from '../components/BottomNav'
+
 
 export default function MobileLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -15,7 +15,6 @@ export default function MobileLayout({ children }) {
 
         <main className="flex-1 overflow-x-clip pb-24 lg:pb-8">{children}</main>
 
-        <BottomNav />
       </div>
     </div>
   )

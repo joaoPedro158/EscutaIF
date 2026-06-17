@@ -6,7 +6,6 @@ const navItems = [
   { to: '/acolhimento', label: 'Acolhimento', icon: Heart },
   { to: '/denuncia', label: 'Denúncias', icon: CircleAlert },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/relatorios', label: 'Relatórios', icon: FileText },
 ]
 
 function SidebarContent({ onNavigate }) {
