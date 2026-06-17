@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Acolhimento from "../pages/Acolhimento";
 import Denuncia from "../pages/Denuncia";
 import Dashboard from "../pages/Dashboard";
+import Cadastra from "../pages/Cadastra";
 
 function AppRoutes() {
     return (
@@ -16,6 +17,7 @@ function AppRoutes() {
                 <Route path="/acolhimento" element={<Acolhimento />} />
                 <Route path="/denuncia" element={<Denuncia />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/cadastra" element={<Cadastra />} />
             </Routes>
         </BrowserRouter>
     );
