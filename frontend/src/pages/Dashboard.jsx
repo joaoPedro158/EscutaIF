@@ -4,6 +4,7 @@ import DashboardFilters from '../components/DashboardFilters'
 import SentimentChart from '../components/SentimentChart'
 import CategoryChart from '../components/CategoryChart'
 import ReportsTable from '../components/ReportsTable'
+import BotaoAdicionarAdmin from '../components/BotaoAdicionarAdmin'
 
 function Dashboard() {
   // Mock data for stats
@@ -24,7 +25,9 @@ function Dashboard() {
             Monitoramento em tempo real do bem-estar e integridade institucional.
           </p>
         </div>
-
+        <div className="mb-6">
+          <BotaoAdicionarAdmin />
+        </div>
         {/* Filters */}
         <DashboardFilters />
 

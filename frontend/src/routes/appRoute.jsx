@@ -12,6 +12,7 @@ function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path="/home" element={<Home />} />
+                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/acolhimento" element={<Acolhimento />} />
                 <Route path="/denuncia" element={<Denuncia />} />
