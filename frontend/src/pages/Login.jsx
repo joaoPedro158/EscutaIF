@@ -24,24 +24,26 @@ function Login() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-surface-muted)]">
-      <div className="mx-auto flex min-h-screen w-full max-w-[390px] flex-col">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-surface-muted)] px-4 py-6 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-6xl flex-col">
         <LoginBackground />
 
-        <header className="absolute left-0 top-0 z-10 flex h-20 w-full items-center px-5 backdrop-blur-[12px] bg-white/60">
+        <header className="relative z-10 flex items-center py-2 sm:py-4">
           <LoginBrand />
         </header>
 
-        <main className="relative z-10 flex flex-1 flex-col justify-center px-5 py-24">
-          <LoginCard
-            formData={formData}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            passwordVisible={passwordVisible}
-            onTogglePassword={() => setPasswordVisible((current) => !current)}
-          />
+        <main className="relative z-10 flex flex-1 items-center justify-center py-10 sm:py-14">
+          <div className="w-full max-w-[440px]">
+            <LoginCard
+              formData={formData}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              passwordVisible={passwordVisible}
+              onTogglePassword={() => setPasswordVisible((current) => !current)}
+            />
 
-          <LoginPrivacyMessage />
+            <LoginPrivacyMessage />
+          </div>
         </main>
       </div>
     </div>

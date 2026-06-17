@@ -9,8 +9,8 @@ export default function LoginCard({
   onTogglePassword,
 }) {
   return (
-    <section className="relative overflow-hidden rounded-[32px] border border-[var(--color-soft-line)] bg-[var(--color-surface-strong)] p-8 shadow-[0_30px_60px_-15px_rgba(0,105,76,0.08)]">
-      <div className="relative flex flex-col gap-8">
+    <section className="relative overflow-hidden rounded-[24px] bg-[var(--color-surface-strong)] p-6 shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_-3px_rgba(0,0,0,0.1)] sm:p-8">
+      <div className="relative flex flex-col gap-6 sm:gap-8">
         <header className="flex flex-col gap-2 text-center">
           <h1 className="text-[26px] font-bold leading-8 tracking-[-0.65px] text-[var(--color-heading)]">
             Bem-vindo
