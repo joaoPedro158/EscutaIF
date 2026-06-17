@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { Home, Heart, CircleAlert } from 'lucide-react'
 
 const navItems = [
-  { to: '/', label: 'Início', icon: Home, end: true },
+  { to: '/dashboard', label: 'Início', icon: Home, end: true },
   { to: '/acolhimento', label: 'Acolhimento', icon: Heart },
   { to: '/denuncia', label: 'Denúncias', icon: CircleAlert },
 ]
