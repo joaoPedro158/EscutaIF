@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Heart, CircleAlert, LayoutDashboard, FileText, X } from 'lucide-react'
+import { ROUTES } from '../enum/rotas'
 
 const navItems = [
-  { to: '/home', label: 'Início', icon: Home, end: true },
-  { to: '/acolhimento', label: 'Acolhimento', icon: Heart },
-  { to: '/denuncia', label: 'Denúncias', icon: CircleAlert },
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: ROUTES.HOME, label: 'Início', icon: Home, end: true },
+  { to: ROUTES.ACOLHIMENTO, label: 'Acolhimento', icon: Heart },
+  { to: ROUTES.DENUNCIA, label: 'Denúncias', icon: CircleAlert },
+  { to: ROUTES.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
 ]
 
 function SidebarContent({ onNavigate }) {

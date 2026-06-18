@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ROUTES } from "../enum/rotas";
 
 import Login from "../pages/Login";
 import Home from "../pages/Home";
@@ -11,13 +12,13 @@ function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={<Home />} />
-                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/acolhimento" element={<Acolhimento />} />
-                <Route path="/denuncia" element={<Denuncia />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/cadastra" element={<Cadastra />} />
+                <Route path={ROUTES.HOME} element={<Home />} />
+                <Route path={ROUTES.HOME_ALIAS} element={<Home />} />
+                <Route path={ROUTES.LOGIN} element={<Login />} />
+                <Route path={ROUTES.ACOLHIMENTO} element={<Acolhimento />} />
+                <Route path={ROUTES.DENUNCIA} element={<Denuncia />} />
+                <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+                <Route path={ROUTES.CADASTRA} element={<Cadastra />} />
             </Routes>
         </BrowserRouter>
     );
