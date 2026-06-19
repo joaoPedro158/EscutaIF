@@ -1,0 +1,29 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ROUTES } from "../enum/rotas";
+
+import Login from "../pages/Login";
+import Home from "../pages/Home";
+import Acolhimento from "../pages/Acolhimento";
+import Denuncia from "../pages/Denuncia";
+import Dashboard from "../pages/Dashboard";
+import Cadastra from "../pages/Cadastra";
+
+function AppRoutes() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path={ROUTES.HOME} element={<Home />} />
+                <Route path={ROUTES.HOME_ALIAS} element={<Home />} />
+                <Route path={ROUTES.LOGIN} element={<Login />} />
+                <Route path={ROUTES.ACOLHIMENTO} element={<Acolhimento />} />
+                <Route path={ROUTES.DENUNCIA} element={<Denuncia />} />
+                <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+                <Route path={ROUTES.CADASTRA} element={<Cadastra />} />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default AppRoutes;
+
+
