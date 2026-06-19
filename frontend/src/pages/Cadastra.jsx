@@ -3,6 +3,7 @@ import RestrictedAccessBanner from '../components/RestrictedAccessBanner'
 import InputField from '../components/InputField'
 import PasswordInput from '../components/PasswordInput'
 import BtnEnviarCadastro from '../components/BtnEnviarCadastro'
+import IconAlerta from '../assets/icon/alerta.svg'
 
 function Cadastra() {
   return (
@@ -54,6 +55,17 @@ function Cadastra() {
                     />
                 </div>
                 <BtnEnviarCadastro />
+                <div className='flex pt-[16px] justify-center items-center gap-[8px] self-stretch mb-4'>
+                  <div className='flex flex-col items-start'> 
+                      <img src={IconAlerta} alt="Alerta" className="w-5 h-5" />
+                  </div>
+                  <div className ='flex flex-col items-start'>
+                    <p classNName=" text-[#3D4943] font-['Plus_Jakarta_Sans'] text-sm font-normal leading-5">
+                      Uma confirmação será enviada ao e-
+                      mail informado.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               
