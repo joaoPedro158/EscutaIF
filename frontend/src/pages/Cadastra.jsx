@@ -2,6 +2,7 @@ import MobileLayout from '../layout/MobileLayout'
 import RestrictedAccessBanner from '../components/RestrictedAccessBanner'
 import InputField from '../components/InputField'
 import PasswordInput from '../components/PasswordInput'
+import BtnEnviarCadastro from '../components/BtnEnviarCadastro'
 
 function Cadastra() {
   return (
@@ -34,7 +35,7 @@ function Cadastra() {
           
             </div>
               <div className="flex flex-col gap-6 self-stretch px-4 mt-6">
-                <div className="inline-grid pb-4 gap-x-6 gap-y-6 self-stretch grid-cols-1 grid-rows-4">
+                <div className="inline-grid pb-4 gap-x-6 gap-y-6 self-stretch items-center grid-cols-1 grid-rows-4">
                   <InputField
                     label="Nome completo"
                     placeholder="Ex: João da Silva"
@@ -52,6 +53,7 @@ function Cadastra() {
                       placeholder="••••••••"
                     />
                 </div>
+                <BtnEnviarCadastro />
               </div>
 
               
