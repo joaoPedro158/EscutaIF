@@ -1,6 +1,7 @@
 import MobileLayout from '../layout/MobileLayout'
 import { useMemo, useState } from 'react'
 import { Heart, ShieldCheck, BookOpen, Users, Sparkles, Send, ChevronDown } from 'lucide-react'
+import { enviarAcolhimento } from '../services/Acolhimento'
 
 function Acolhimento() {
   const [selectedMood, setSelectedMood] = useState('neutro')
@@ -14,11 +15,11 @@ function Acolhimento() {
 
   const moodCards = useMemo(
     () => [
-      { id: 'pessimo', emoji: '😞', label: 'Péssimo', tone: 'var(--color-surface-strong)' },
-      { id: 'ruim', emoji: '🙁', label: 'Ruim', tone: 'var(--color-surface-strong)' },
+      { id: 'muito_triste', emoji: '😞', label: 'Muito Triste', tone: 'var(--color-surface-strong)' },
+      { id: 'triste', emoji: '🙁', label: 'Triste', tone: 'var(--color-surface-strong)' },
       { id: 'neutro', emoji: '😐', label: 'Neutro', tone: 'var(--color-surface-strong)' },
-      { id: 'bom', emoji: '🙂', label: 'Bom', tone: 'var(--color-surface-strong)' },
-      { id: 'otimo', emoji: '😁', label: 'Ótimo', tone: 'var(--color-surface-strong)' },
+      { id: 'feliz', emoji: '🙂', label: 'Feliz', tone: 'var(--color-surface-strong)' },
+      { id: 'muito_feliz', emoji: '😁', label: 'Muito Feliz', tone: 'var(--color-surface-strong)' },
     ],
     [],
   )
@@ -28,10 +29,34 @@ function Acolhimento() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setSubmitted(true)
-    window.setTimeout(() => setSubmitted(false), 2500)
+
+    const periodoPorTurma = {
+      '1_ano': 1,
+      '2_ano': 2,
+      '3_ano': 3,
+      '4_ano': 4,
+    }
+
+    const dadosParaEnviar = {
+      genero: formData.genero,
+      turno: formData.turno,
+      humor: selectedMood,
+      curso: formData.curso,
+      periodo: periodoPorTurma[formData.turma] ?? null,
+    }
+
+    console.log('Dados enviados para a API:', dadosParaEnviar)
+
+    try {
+      await enviarAcolhimento(dadosParaEnviar)
+    } catch (error) {
+      console.error('Erro ao enviar acolhimento:', error)
+    } finally {
+      window.setTimeout(() => setSubmitted(false), 2500)
+    }
   }
 
   return (
@@ -155,13 +180,55 @@ function Acolhimento() {
 
             <div className="grid gap-5 px-6 py-6 md:grid-cols-2 md:px-8">
               {[
-                { label: 'Curso', name: 'curso', placeholder: 'Selecione seu curso' },
-                { label: 'Gênero', name: 'genero', placeholder: 'Selecione seu gênero' },
-                { label: 'Turma', name: 'turma', placeholder: 'Informe sua turma' },
-                { label: 'Turno', name: 'turno', placeholder: 'Selecione o turno' },
+                {
+                  label: 'Curso',
+                  name: 'curso',
+                  placeholder: 'Selecione seu curso',
+                  opcoes: [
+                    { valor: 'tads', texto: 'TADS' },
+                    { valor: 'tpq', texto: 'TPQ' },
+                    { valor: 'informatica', texto: 'Informática' },
+                    { valor: 'quimica', texto: 'Química' },
+                    { valor: 'administracao', texto: 'Administração' },
+                  ],
+                },
+                {
+                  label: 'Gênero',
+                  name: 'genero',
+                  placeholder: 'Selecione seu gênero',
+                  opcoes: [
+                    { valor: 'masculino', texto: 'Masculino' },
+                    { valor: 'feminino', texto: 'Feminino' },
+                    { valor: 'outro', texto: 'Outro' },
+                    { valor: 'nao_informar', texto: 'Prefiro não informar' },
+                  ],
+                },
+                {
+                  label: 'Turma',
+                  name: 'turma',
+                  placeholder: 'Informe sua turma',
+                  opcoes: [
+                    { valor: '1_ano', texto: '1º Ano' },
+                    { valor: '2_ano', texto: '2º Ano' },
+                    { valor: '3_ano', texto: '3º Ano' },
+                    { valor: '4_ano', texto: '4º Ano' },
+                  ],
+                },
+                {
+                  label: 'Turno',
+                  name: 'turno',
+                  placeholder: 'Selecione o turno',
+                  opcoes: [
+                    { valor: 'matutino', texto: 'Matutino' },
+                    { valor: 'vespertino', texto: 'Vespertino' },
+                    { valor: 'noturno', texto: 'Noturno' },
+                  ],
+                },
               ].map((field) => (
                 <label key={field.name} className="flex flex-col gap-2">
-                  <span className="text-sm font-medium text-[var(--color-text)]">{field.label}</span>
+                  <span className="text-sm font-medium text-[var(--color-text)]">
+                    {field.label}
+                  </span>
                   <div className="relative">
                     <select
                       name={field.name}
@@ -169,12 +236,21 @@ function Acolhimento() {
                       onChange={handleChange}
                       className="w-full appearance-none rounded-xl border border-[var(--color-soft-line)] bg-[var(--color-surface)] px-4 py-3 pr-10 text-[var(--color-heading)] outline-none transition-colors focus:border-[var(--primary)]"
                     >
+                      {/* Opção padrão (Placeholder) */}
                       <option value="">{field.placeholder}</option>
-                      <option value="opcao-1">Opção 1</option>
-                      <option value="opcao-2">Opção 2</option>
-                      <option value="opcao-3">Opção 3</option>
+
+                      {/* Renderiza as opções específicas deste campo dinamicamente */}
+                      {field.opcoes.map((opcao) => (
+                        <option key={opcao.valor} value={opcao.valor}>
+                          {opcao.texto}
+                        </option>
+                      ))}
                     </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[var(--color-text)]" aria-hidden="true" />
+                    
+                    <ChevronDown 
+                      className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[var(--color-text)]" 
+                      aria-hidden="true" 
+                    />
                   </div>
                 </label>
               ))}
