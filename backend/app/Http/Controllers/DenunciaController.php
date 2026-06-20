@@ -17,8 +17,8 @@ class DenunciaController extends Controller
     }
     public function criar(Request $request) : JsonResponse
     {
-        $dadosRequisição = $request->all();
-        $denuncia = $this->denunciaService->registra($dadosRequisição);
+        $dadosRequisicao = $request->all();
+        $denuncia = $this->denunciaService->registra($dadosRequisicao);
 
         return response()->json($denuncia, 201);
     }
