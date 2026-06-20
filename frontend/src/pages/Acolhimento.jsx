@@ -11,6 +11,7 @@ function Acolhimento() {
     turma: '',
     turno: '',
   })
+  const [fieldErrors, setFieldErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
   const moodCards = useMemo(
@@ -31,6 +32,21 @@ function Acolhimento() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    const erros = {}
+
+    if (!formData.curso) erros.curso = 'Selecione um curso.'
+    if (!formData.genero) erros.genero = 'Selecione um gênero.'
+    if (!formData.turma) erros.turma = 'Selecione uma turma.'
+    if (!formData.turno) erros.turno = 'Selecione um turno.'
+
+    if (Object.keys(erros).length > 0) {
+      setFieldErrors(erros)
+      setSubmitted(false)
+      return
+    }
+
+    setFieldErrors({})
     setSubmitted(true)
 
     const periodoPorTurma = {
@@ -234,12 +250,14 @@ function Acolhimento() {
                       name={field.name}
                       value={formData[field.name]}
                       onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(fieldErrors[field.name])}
                       className="w-full appearance-none rounded-xl border border-[var(--color-soft-line)] bg-[var(--color-surface)] px-4 py-3 pr-10 text-[var(--color-heading)] outline-none transition-colors focus:border-[var(--primary)]"
                     >
-                      {/* Opção padrão (Placeholder) */}
-                      <option value="">{field.placeholder}</option>
+                      <option value="" disabled>
+                        {field.placeholder}
+                      </option>
 
-                      {/* Renderiza as opções específicas deste campo dinamicamente */}
                       {field.opcoes.map((opcao) => (
                         <option key={opcao.valor} value={opcao.valor}>
                           {opcao.texto}
@@ -252,6 +270,9 @@ function Acolhimento() {
                       aria-hidden="true" 
                     />
                   </div>
+                  {fieldErrors[field.name] ? (
+                    <span className="text-xs font-medium text-red-600">{fieldErrors[field.name]}</span>
+                  ) : null}
                 </label>
               ))}
             </div>
