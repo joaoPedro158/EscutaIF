@@ -13,10 +13,19 @@ return new class extends Migration
     {
         Schema::create('denuncia', function (Blueprint $table) {
             $table->id();
-            $table->string('nome')->nullable();
+            $table->foreignId('denunciante_id')
+                ->nullable()
+                ->constrained('denunciante')
+                ->onDelete('cascade')
+                ;
+
             $table->string('tipo');
             $table->text('descricao');
             $table->dateTime('data_ocorrencia')->nullable();
+            $table->string('local_ocorrencia')->nullable();
+            $table->string('pessoa_afetada');
+            $table->string('testemunha')->nullable();
+            $table->string('status')->default('Pendente');
             $table->timestamps();
         });
     }
