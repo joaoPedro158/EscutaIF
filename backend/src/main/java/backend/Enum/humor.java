@@ -1,6 +1,6 @@
 package backend.Enum;
 
-public enum emocao {
+public enum humor {
     MUITO_TRISTE,
     TRISTE,
     NEUTRO,

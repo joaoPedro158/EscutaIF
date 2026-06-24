@@ -1,4 +1,4 @@
-package backend.Route;
+package backend.Controller.Route;
 
 public final class rotas {
 
