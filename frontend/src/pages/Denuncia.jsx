@@ -10,8 +10,6 @@ function Denuncia() {
     eventDate: '',
     eventLocation: '',
     affectedPerson: '',
-    witnesses: '',
-    additionalInfo: '',
   })
   const [submitted, setSubmitted] = useState(false)
 
@@ -51,8 +49,6 @@ function Denuncia() {
         eventDate: '',
         eventLocation: '',
         affectedPerson: '',
-        witnesses: '',
-        additionalInfo: '',
       })
     }, 3000)
   }
@@ -214,66 +210,32 @@ function Denuncia() {
               />
             </div>
 
-            {/* Witnesses */}
-            <div className="mb-6">
-              <label htmlFor="witnesses" className="mb-2 block font-semibold text-[#1b1c19]">
-                Testemunhas
-              </label>
-              <textarea
-                id="witnesses"
-                name="witnesses"
-                value={formData.witnesses}
-                onChange={handleChange}
-                rows="2"
-                placeholder="Houve testemunhas? Descreva como identificá-las..."
-                className="w-full rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-              />
-            </div>
-
-            {/* Additional Information */}
-            <div className="mb-8">
-              <label htmlFor="additionalInfo" className="mb-2 block font-semibold text-[#1b1c19]">
-                Informações Adicionais
-              </label>
-              <textarea
-                id="additionalInfo"
-                name="additionalInfo"
-                value={formData.additionalInfo}
-                onChange={handleChange}
-                rows="3"
-                placeholder="Algo mais que você gostaria de adicionar?"
-                className="w-full rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-              />
-            </div>
+           
 
             {/* Conditional Fields for Identified */}
-            {formData.identificationType === 'identificada' && (
-              <div className="mb-8 rounded-lg bg-[#f5f5f5] p-4">
-                <p className="mb-4 text-sm font-semibold text-[#1b1c19]">Dados para Contato</p>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <input
-                    type="text"
-                    placeholder="Seu nome completo"
-                    className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Seu email"
-                    className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Seu telefone"
-                    className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Seu registro de aluno/professor"
-                    className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
-                  />
+              {formData.identificationType === 'identificada' && (
+                <div className="mb-8 rounded-lg bg-[#f5f5f5] p-4">
+                  <p className="mb-4 text-sm font-semibold text-[#1b1c19]">Dados para Contato</p>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <input
+                      type="text"
+                      placeholder="Seu nome completo"
+                      className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
+                    />
+                    <input
+                      type="tel"
+                      placeholder="Seu telefone"
+                      className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Seu email"
+                      // ADICIONADO A CLASSE md:col-span-2 AQUI:
+                      className="w-full rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33] md:col-span-2"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Privacy Notice */}
             <div className="mb-8 rounded-lg bg-blue-50 p-4">
