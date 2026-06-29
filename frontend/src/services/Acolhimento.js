@@ -3,7 +3,7 @@ import axios from 'axios';
 export const enviarAcolhimento = async (dadosAcolhimento) => {
   try {
     console.log('Payload enviado ao backend:', dadosAcolhimento)
-    const resposta = await axios.post('http://localhost:8080/api/acolher/form', dadosAcolhimento);
+    const resposta = await axios.post('/api/acolhimento/form', dadosAcolhimento);
     console.log('Acolhimento criado com sucesso:', resposta.data);
     return resposta.data;
 

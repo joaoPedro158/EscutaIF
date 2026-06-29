@@ -4,7 +4,7 @@ import { Heart, ShieldCheck, BookOpen, Users, Sparkles, Send, ChevronDown } from
 import { enviarAcolhimento } from '../services/Acolhimento'
 
 function Acolhimento() {
-  const [selectedMood, setSelectedMood] = useState('neutro')
+  const [selectedMood, setSelectedMood] = useState('NEUTRO')
   const [formData, setFormData] = useState({
     curso: '',
     genero: '',
@@ -16,11 +16,11 @@ function Acolhimento() {
 
   const moodCards = useMemo(
     () => [
-      { id: 'muito_triste', emoji: '😞', label: 'Muito Triste', tone: 'var(--color-surface-strong)' },
-      { id: 'triste', emoji: '🙁', label: 'Triste', tone: 'var(--color-surface-strong)' },
-      { id: 'neutro', emoji: '😐', label: 'Neutro', tone: 'var(--color-surface-strong)' },
-      { id: 'feliz', emoji: '🙂', label: 'Feliz', tone: 'var(--color-surface-strong)' },
-      { id: 'muito_feliz', emoji: '😁', label: 'Muito Feliz', tone: 'var(--color-surface-strong)' },
+      { id: 'MUITO_TRISTE', emoji: '😞', label: 'Muito Triste', tone: 'var(--color-surface-strong)' },
+      { id: 'TRISTE', emoji: '🙁', label: 'Triste', tone: 'var(--color-surface-strong)' },
+      { id: 'NEUTRO', emoji: '😐', label: 'Neutro', tone: 'var(--color-surface-strong)' },
+      { id: 'FELIZ', emoji: '🙂', label: 'Feliz', tone: 'var(--color-surface-strong)' },
+      { id: 'MUITO_FELIZ', emoji: '😁', label: 'Muito Feliz', tone: 'var(--color-surface-strong)' },
     ],
     [],
   )
@@ -49,19 +49,12 @@ function Acolhimento() {
     setFieldErrors({})
     setSubmitted(true)
 
-    const periodoPorTurma = {
-      '1_ano': 1,
-      '2_ano': 2,
-      '3_ano': 3,
-      '4_ano': 4,
-    }
-
     const dadosParaEnviar = {
       genero: formData.genero,
       turno: formData.turno,
       humor: selectedMood,
       curso: formData.curso,
-      periodo: periodoPorTurma[formData.turma] ?? null,
+      periodo: Number.parseInt(formData.turma, 10) || null,
     }
 
     console.log('Dados enviados para a API:', dadosParaEnviar)
@@ -201,11 +194,11 @@ function Acolhimento() {
                   name: 'curso',
                   placeholder: 'Selecione seu curso',
                   opcoes: [
-                    { valor: 'tads', texto: 'TADS' },
-                    { valor: 'tpq', texto: 'TPQ' },
-                    { valor: 'informatica', texto: 'Informática' },
-                    { valor: 'quimica', texto: 'Química' },
-                    { valor: 'administracao', texto: 'Administração' },
+                    { valor: 'TADS', texto: 'TADS' },
+                    { valor: 'TPQ', texto: 'TPQ' },
+                    { valor: 'INFORMATICA', texto: 'Informática' },
+                    { valor: 'QUIMICA', texto: 'Química' },
+                    { valor: 'ADMINISTRACAO', texto: 'Administração' },
                   ],
                 },
                 {
@@ -213,10 +206,10 @@ function Acolhimento() {
                   name: 'genero',
                   placeholder: 'Selecione seu gênero',
                   opcoes: [
-                    { valor: 'masculino', texto: 'Masculino' },
-                    { valor: 'feminino', texto: 'Feminino' },
-                    { valor: 'outro', texto: 'Outro' },
-                    { valor: 'nao_informar', texto: 'Prefiro não informar' },
+                    { valor: 'MASCULINO', texto: 'Masculino' },
+                    { valor: 'FEMININO', texto: 'Feminino' },
+                    { valor: 'OUTRO', texto: 'Outro' },
+                    { valor: 'NAO_INFORMAR', texto: 'Prefiro não informar' },
                   ],
                 },
                 {
@@ -224,10 +217,10 @@ function Acolhimento() {
                   name: 'turma',
                   placeholder: 'Informe sua turma',
                   opcoes: [
-                    { valor: '1_ano', texto: '1º Ano' },
-                    { valor: '2_ano', texto: '2º Ano' },
-                    { valor: '3_ano', texto: '3º Ano' },
-                    { valor: '4_ano', texto: '4º Ano' },
+                    { valor: '1', texto: '1º Ano' },
+                    { valor: '2', texto: '2º Ano' },
+                    { valor: '3', texto: '3º Ano' },
+                    { valor: '4', texto: '4º Ano' },
                   ],
                 },
                 {
@@ -235,9 +228,9 @@ function Acolhimento() {
                   name: 'turno',
                   placeholder: 'Selecione o turno',
                   opcoes: [
-                    { valor: 'matutino', texto: 'Matutino' },
-                    { valor: 'vespertino', texto: 'Vespertino' },
-                    { valor: 'noturno', texto: 'Noturno' },
+                    { valor: 'MATUTINO', texto: 'Matutino' },
+                    { valor: 'VESPERTINO', texto: 'Vespertino' },
+                    { valor: 'NOTURNO', texto: 'Noturno' },
                   ],
                 },
               ].map((field) => (
