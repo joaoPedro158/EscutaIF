@@ -23,7 +23,8 @@ public class denunciaService {
             denunciaModel.setPessoaAfetada("Anonimo");
         }
         denunciaEntity entity = denunciaMapper.toEntity(denunciaModel);
-        denunciaJpaRepository.save(entity);
+        denunciaEntity savedEntity = denunciaJpaRepository.save(entity);
+        denunciaModel.setId(savedEntity.getId());
         return denunciaMapper.toDto(denunciaModel);
     }
 }

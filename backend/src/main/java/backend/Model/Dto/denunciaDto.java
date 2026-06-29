@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class denunciaDto {
+    private Long id;
     private tipoDenuncia tipoDenuncia;
     private String descricao;
     private LocalDateTime dataIncidente;
