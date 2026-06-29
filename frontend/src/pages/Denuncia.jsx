@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import MobileLayout from '../layout/MobileLayout'
 import { AlertCircle, CheckCircle } from 'lucide-react'
+import { enviarDenuncia } from '../services/Denuncia'
 
 function Denuncia() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,9 @@ function Denuncia() {
     eventDate: '',
     eventLocation: '',
     affectedPerson: '',
+    nome: '',
+    email: '',
+    telefone: '',
   })
   const [submitted, setSubmitted] = useState(false)
 
@@ -36,21 +40,29 @@ function Denuncia() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Denúncia enviada:', formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({
-        identificationType: 'anonima',
-        type: '',
-        description: '',
-        eventDate: '',
-        eventLocation: '',
-        affectedPerson: '',
-      })
-    }, 3000)
+
+    try {
+      await enviarDenuncia(formData)
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({
+          identificationType: 'anonima',
+          type: '',
+          description: '',
+          eventDate: '',
+          eventLocation: '',
+          affectedPerson: '',
+          nome: '',
+          email: '',
+          telefone: '',
+        })
+      }, 3000)
+    } catch (error) {
+      console.error('Erro ao enviar denúncia:', error)
+    }
   }
 
   if (submitted) {
@@ -219,18 +231,26 @@ function Denuncia() {
                   <div className="grid gap-4 md:grid-cols-2">
                     <input
                       type="text"
+                      name="nome"
+                      value={formData.nome}
+                      onChange={handleChange}
                       placeholder="Seu nome completo"
                       className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
                     />
                     <input
                       type="tel"
+                      name="telefone"
+                      value={formData.telefone}
+                      onChange={handleChange}
                       placeholder="Seu telefone"
                       className="rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
                     />
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Seu email"
-                      // ADICIONADO A CLASSE md:col-span-2 AQUI:
                       className="w-full rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] placeholder-[#999] focus:outline-none focus:ring-2 focus:ring-[#fcaa33] md:col-span-2"
                     />
                   </div>
