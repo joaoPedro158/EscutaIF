@@ -4,6 +4,6 @@ public enum curso {
     TADS,
     TPQ,
     QUIMICA,
-    INFOTMATICA,
+    INFORMATICA,
     ADMINISTRACAO
 }
