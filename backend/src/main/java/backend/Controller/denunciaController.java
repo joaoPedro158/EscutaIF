@@ -5,6 +5,7 @@ import backend.Model.Dto.denunciaDto;
 import backend.Service.denunciaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,6 @@ public class denunciaController {
     @PostMapping("/form")
     public ResponseEntity salvaDenuncia(@Valid @RequestBody denunciaRecord denunciaRecord) {
        denunciaDto dto = denunciaService.salvaDenuncia(denunciaRecord);
-       return ResponseEntity.ok(dto);
+       return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 }

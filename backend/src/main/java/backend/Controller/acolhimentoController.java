@@ -5,6 +5,7 @@ import backend.Model.Dto.Record.acolhimentoRecord;
 import backend.Model.Dto.acolhimentoDto;
 import backend.Service.acolhimentoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class acolhimentoController {
     @PostMapping("/form")
     public ResponseEntity saveAcolhimento(@RequestBody acolhimentoRecord record) {
         acolhimentoDto dto = service.salvarAcolhimento(record);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
     }
 }
