@@ -67,4 +67,18 @@ public class RestExceptionHandle  {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErroResposta> handleValidacao(MethodArgumentNotValidException ex) {
+        String mensagem = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(field -> field.getField() + ": " + field.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+
+        ErroResposta erro = new ErroResposta(
+                HttpStatus.BAD_REQUEST, mensagem, LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
 }
