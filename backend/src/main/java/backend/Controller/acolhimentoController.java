@@ -17,7 +17,7 @@ public class acolhimentoController {
 
     private final acolhimentoService service;
     @PostMapping("/form")
-    public ResponseEntity saveAcolhimento(@RequestBody @Valid acolhimentoRecord record) {
+    public ResponseEntity saveAcolhimento(@RequestBody  acolhimentoRecord record) {
         acolhimentoDto dto = service.salvarAcolhimento(record);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
