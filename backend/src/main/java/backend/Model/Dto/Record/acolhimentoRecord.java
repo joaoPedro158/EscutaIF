@@ -17,6 +17,6 @@ public record acolhimentoRecord(
     turno turno,
 
     @NotNull(message = "periodo é obrigatorio")
-    int periodo
+    Integer periodo
 ) {
 }

@@ -30,5 +30,5 @@ public class acolhimentoEntity {
     @Enumerated(EnumType.STRING)
     private turno turno;
 
-    private int periodo;
+    private Integer periodo;
 }

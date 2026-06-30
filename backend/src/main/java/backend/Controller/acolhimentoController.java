@@ -4,6 +4,7 @@ import backend.Controller.Route.rotas;
 import backend.Model.Dto.Record.acolhimentoRecord;
 import backend.Model.Dto.acolhimentoDto;
 import backend.Service.acolhimentoService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class acolhimentoController {
 
     private final acolhimentoService service;
     @PostMapping("/form")
-    public ResponseEntity saveAcolhimento(@RequestBody acolhimentoRecord record) {
+    public ResponseEntity saveAcolhimento(@RequestBody @Valid acolhimentoRecord record) {
         acolhimentoDto dto = service.salvarAcolhimento(record);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 

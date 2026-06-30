@@ -13,7 +13,7 @@ public class acolhimento {
     private curso curso;
     private genero genero;
     private turno turno;
-    private int periodo;
+    private Integer periodo;
 
 
 }
