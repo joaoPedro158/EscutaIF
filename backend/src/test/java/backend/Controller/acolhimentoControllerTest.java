@@ -62,5 +62,23 @@ public class acolhimentoControllerTest {
         assertEquals(1, repository.count());
     }
 
+    @Test
+    public void DeveRetornaMensagemDeErroSobreHumorNulo() throws Exception{
+        acolhimentoRecord record = new acolhimentoRecord(
+                null, curso.INFORMATICA, genero.FEMININO, turno.MATUTINO,2
+        );
+        String json = objectMapper.writeValueAsString(record);
+
+        mockMvc.perform(post(rotas.ACOLHIMENTO + "/form")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value("400 BAD_REQUEST"))
+                .andExpect(jsonPath("$.mensagem").value("o campo humor não pode ser nulo"));
+
+        assertEquals(0, repository.count());
+    }
+
 }
 

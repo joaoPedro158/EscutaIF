@@ -21,16 +21,16 @@ public class acolhimentoService {
         acolhimento acolhimentoModel = mapper.toModel(record);
 
         if(acolhimentoModel.getCurso() == null) {
-            throw new campoNuloException(" o campo curos não pode ser nulo");
+            throw new campoNuloException("o campo curos não pode ser nulo");
         }
         if(acolhimentoModel.getGenero() == null) {
-            throw new campoNuloException(" o campo genero não pode ser nulo");
+            throw new campoNuloException("o campo genero não pode ser nulo");
         }
         if(acolhimentoModel.getHumor() == null) {
-            throw new campoNuloException(" o campo humor não pode ser nulo");
+            throw new campoNuloException("o campo humor não pode ser nulo");
         }
         if(acolhimentoModel.getTurno() == null) {
-            throw new campoNuloException(" o campo turno não pode ser nulo");
+            throw new campoNuloException("o campo turno não pode ser nulo");
         }
 
 
