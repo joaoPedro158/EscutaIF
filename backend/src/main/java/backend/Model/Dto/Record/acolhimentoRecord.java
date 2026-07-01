@@ -13,7 +13,7 @@ public record acolhimentoRecord(
     turno turno,
 
 
-        @NotNull(message = "O campo 'periodo' não pode ser nulo")
+        @NotNull(message = "O campo periodo não pode ser nulo")
         @Min(value = 1, message = "O campo 'periodo' deve ser maior que 0")
         @Max(value = 4, message = "O campo 'periodo' deve ser no máximo 4")
     Integer periodo

@@ -21,7 +21,7 @@ public class acolhimentoService {
         acolhimento acolhimentoModel = mapper.toModel(record);
 
         if(acolhimentoModel.getCurso() == null) {
-            throw new campoNuloException("o campo curos não pode ser nulo");
+            throw new campoNuloException("o campo curso não pode ser nulo");
         }
         if(acolhimentoModel.getGenero() == null) {
             throw new campoNuloException("o campo genero não pode ser nulo");
