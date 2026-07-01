@@ -152,5 +152,41 @@ public class acolhimentoControllerTest {
         assertEquals(0, repository.count());
     }
 
+    @Test
+    public void DeveRetornaMensagemDeErroSobrePeriodoSerMenorQue0() throws Exception{
+        acolhimentoRecord record = new acolhimentoRecord(
+                humor.FELIZ, curso.INFORMATICA, genero.FEMININO, turno.MATUTINO,-1
+        );
+        String json = objectMapper.writeValueAsString(record);
+
+        mockMvc.perform(post(rotas.ACOLHIMENTO + "/form")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value("400 BAD_REQUEST"))
+                .andExpect(jsonPath("$.mensagem").value("periodo: O campo periodo deve ser maior que 0"));
+
+        assertEquals(0, repository.count());
+    }
+
+    @Test
+    public void DeveRetornaMensagemDeErroSobrePeriodoSerMaiorQue4() throws Exception{
+        acolhimentoRecord record = new acolhimentoRecord(
+                humor.FELIZ, curso.INFORMATICA, genero.FEMININO, turno.MATUTINO,5
+        );
+        String json = objectMapper.writeValueAsString(record);
+
+        mockMvc.perform(post(rotas.ACOLHIMENTO + "/form")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value("400 BAD_REQUEST"))
+                .andExpect(jsonPath("$.mensagem").value("periodo: O campo periodo deve ser no máximo 4"));
+
+        assertEquals(0, repository.count());
+    }
+
 }
 
