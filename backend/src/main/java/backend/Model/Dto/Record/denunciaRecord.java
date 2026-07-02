@@ -1,8 +1,11 @@
 package backend.Model.Dto.Record;
 
 import backend.Enum.tipoDenuncia;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 import java.time.LocalDateTime;
 
 public record denunciaRecord(
@@ -14,9 +17,23 @@ public record denunciaRecord(
 
         LocalDateTime dataIncidente,
         String local,
+
+        @Pattern(
+                regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$",
+                message = "O nome deve conter apenas letras e espaços"
+        )
         String pessoaAfetada,
+        @Pattern(
+                regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$",
+                message = "O nome deve conter apenas letras e espaços"
+        )
         String nome,
+        @Email(message = "O formato do e-mail digitado é inválido")
         String email,
+        @Pattern(
+                regexp = "^[0-9]+$",
+                message = "O campo deve conter apenas números, sem letras ou símbolos"
+        )
         String telefone
 ) {
 }
