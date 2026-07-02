@@ -243,4 +243,73 @@ public class denunciaControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensagem", is("Valor inválido no corpo da requisição")));
     }
+
+    @Test
+    public void deveRetornarBadRequestQuandoTelefoneMenorQueMinimo() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "123456789"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("telefone")))
+                .andExpect(jsonPath("$.mensagem", containsString("entre 10 e 15")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoTelefoneMaiorQueMaximo() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11111111111111111"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("telefone")))
+                .andExpect(jsonPath("$.mensagem", containsString("entre 10 e 15")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoDataIncidenteForFutura() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "3026-01-01T00:00:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11999999999"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("dataIncidente")))
+                .andExpect(jsonPath("$.mensagem", containsString("não pode ser uma data futura")));
+    }
 }

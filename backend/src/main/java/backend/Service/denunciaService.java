@@ -22,6 +22,11 @@ public class denunciaService {
         if( denunciaModel.getPessoaAfetada() == null || denunciaModel.getPessoaAfetada().trim().isEmpty()) {
             denunciaModel.setPessoaAfetada("Anonimo");
         }
+
+        if (denunciaModel.getDescricao() == null || denunciaModel.getDescricao().trim().isEmpty()) {
+            denunciaModel.setDescricao("Sem descrição");
+        }
+
         denunciaEntity entity = denunciaMapper.toEntity(denunciaModel);
         denunciaEntity savedEntity = denunciaJpaRepository.save(entity);
         denunciaModel.setId(savedEntity.getId());
