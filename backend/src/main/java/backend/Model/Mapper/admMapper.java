@@ -12,5 +12,5 @@ public interface admMapper {
 
     admEntity toEntity(adm admModel);
 
-    admDto toDto(adm admModel);
+    admDto toDto(admEntity entity);
 }

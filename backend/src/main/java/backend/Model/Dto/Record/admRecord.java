@@ -15,6 +15,8 @@ public record admRecord(
 
         @NotBlank(message = "A senha e obrigatoria")
         @Size(min = 8, max = 100, message = "A senha deve ter entre 8 e 100 caracteres")
-        String senha
+        String senha,
+
+        String confirma_senha
 ) {
 }
