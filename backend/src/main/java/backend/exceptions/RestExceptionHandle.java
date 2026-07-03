@@ -69,4 +69,12 @@ public class RestExceptionHandle  {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
+
+    @ExceptionHandler(regraNegocioException.class)
+    public ResponseEntity<ErroResposta> tratarRegraNegocio(regraNegocioException ex){
+        ErroResposta erro = new ErroResposta(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
+
+        return ResponseEntity.status(ex.getStatus()).body(erro);
+    }
+
 }
