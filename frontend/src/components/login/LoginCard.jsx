@@ -7,6 +7,9 @@ export default function LoginCard({
   onSubmit,
   passwordVisible,
   onTogglePassword,
+  errors = {},
+  submitError = '',
+  loading = false,
 }) {
   return (
     <section className="relative overflow-hidden rounded-[32px] border border-[var(--color-soft-line)] bg-[var(--color-surface-strong)] p-8 shadow-[0_30px_60px_-15px_rgba(0,105,76,0.08)]">
@@ -21,6 +24,12 @@ export default function LoginCard({
         </header>
 
         <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+          {submitError && (
+            <div className="p-4 text-sm text-red-800 bg-red-50 border border-red-200 rounded-2xl text-center font-semibold animate-fade-in">
+              {submitError}
+            </div>
+          )}
+
           <LoginField
             id="email"
             label="E-mail institucional"
@@ -30,22 +39,27 @@ export default function LoginCard({
             placeholder="seu.nome@ifrn.edu.br"
             icon={Mail}
             autoComplete="email"
+            error={errors.email}
+            disabled={loading}
           />
 
           <LoginField
-            id="password"
+            id="senha"
             label="Senha"
             type={passwordVisible ? 'text' : 'password'}
-            value={formData.password}
+            value={formData.senha}
             onChange={onChange}
             placeholder="Digite sua senha"
             icon={Lock}
             autoComplete="current-password"
+            error={errors.senha}
+            disabled={loading}
             rightSlot={
               <button
                 type="button"
                 onClick={onTogglePassword}
-                className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-[var(--color-text)] transition-colors hover:text-[var(--primary)]"
+                disabled={loading}
+                className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-[var(--color-text)] transition-colors hover:text-[var(--primary)] disabled:opacity-50"
                 aria-label={passwordVisible ? 'Ocultar senha' : 'Mostrar senha'}
               >
                 {passwordVisible ? <EyeOff className="size-4" aria-hidden="true" /> : <Eye className="size-4" aria-hidden="true" />}
@@ -56,10 +70,11 @@ export default function LoginCard({
 
           <button
             type="submit"
-            className="relative inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] px-6 py-4 text-sm font-semibold text-white shadow-[0_4px_6px_-4px_rgba(0,105,76,0.2),0_10px_15px_-3px_rgba(0,105,76,0.2)] transition-opacity hover:opacity-90"
+            disabled={loading}
+            className="relative inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[var(--primary)] px-6 py-4 text-sm font-semibold text-white shadow-[0_4px_6px_-4px_rgba(0,105,76,0.2),0_10px_15px_-3px_rgba(0,105,76,0.2)] transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Entrar
-            <ArrowRight className="size-4" aria-hidden="true" />
+            {loading ? 'Entrando...' : 'Entrar'}
+            {!loading && <ArrowRight className="size-4" aria-hidden="true" />}
           </button>
         </form>
       </div>
