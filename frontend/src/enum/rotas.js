@@ -7,5 +7,5 @@ export const ROUTES = {
   ACOLHIMENTO: '/acolhimento',
   DENUNCIA: '/denuncia',
   DASHBOARD: '/dashboard',
-  CADASTRA: '/cadastra',
+  CADASTRA: '/adm',
 };
