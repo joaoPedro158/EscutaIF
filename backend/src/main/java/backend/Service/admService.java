@@ -31,9 +31,14 @@ public class admService {
         if(!admModel.getSenha().equals(admModel.getConfirma_senha())) {
             throw new regraNegocioException("Senha e confirma senha nao conferem", HttpStatus.BAD_REQUEST);
         }
+
+
         String senhaHash = passwordEncoder.encode(admModel.getSenha());
         admModel.setSenha(senhaHash);
         admEntity entity = mapper.toEntity(admModel);
+        if (Repository.findByEmail(entity.getEmail()).isPresent()) {
+            throw new regraNegocioException("Email ja cadastrado", HttpStatus.BAD_REQUEST);
+        }
         admEntity savedEntity = Repository.save(entity);
         return mapper.toDto(savedEntity);
     }
