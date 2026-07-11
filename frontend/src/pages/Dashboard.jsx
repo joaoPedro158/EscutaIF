@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import MobileLayout from '../layout/MobileLayout'
 import StatCard from '../components/StatCard'
 import DashboardFilters from '../components/DashboardFilters'
@@ -5,13 +6,32 @@ import SentimentChart from '../components/SentimentChart'
 import CategoryChart from '../components/CategoryChart'
 import ReportsTable from '../components/ReportsTable'
 import BotaoAdicionarAdmin from '../components/BotaoAdicionarAdmin'
+import { getDashboardCount, getDashboardSemanal } from '../services/Dashboard'
 
 function Dashboard() {
-  // Mock data for stats
+  const [counts, setCounts] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
+  const [semanal, setSemanal] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [countData, semanalData] = await Promise.all([
+          getDashboardCount(),
+          getDashboardSemanal()
+        ])
+        if (countData) setCounts(countData)
+        if (semanalData) setSemanal(semanalData)
+      } catch (error) {
+        console.error("Erro ao carregar os dados do dashboard:", error)
+      }
+    }
+    fetchDashboardData()
+  }, [])
+
   const stats = [
-    { title: 'Acolhimentos', value: '247', subtitle: '+12 esta semana' },
-    { title: 'Denúncias', value: '89', subtitle: '+5 esta semana' },
-    { title: 'Pendências', value: '34', subtitle: '-8 esta semana' },
+    { title: 'Acolhimentos', value: counts.qtdAcolhimento, subtitle: `+${semanal.qtdAcolhimento} esta semana` },
+    { title: 'Denúncias', value: counts.qtdDenuncia, subtitle: `+${semanal.qtdDenuncia} esta semana` },
+    { title: 'Pendências', value: counts.qtdPedente, subtitle: `+${semanal.qtdPedente} esta semana` },
     { title: 'Sentimento Geral', value: 'Neutro', highlighted: true, subtitle: 'Tendência estável' }
   ]
 

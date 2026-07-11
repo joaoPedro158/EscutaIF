@@ -33,7 +33,7 @@ public class securityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/adm/login/form").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/acolhimento/form").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/denuncias/form").permitAll()
-
+                        .requestMatchers(HttpMethod.GET, "/api/dashboard/**").authenticated()
                         // Se você tiver o formulário de acolhimento público, libere-o aqui também:
                         // .requestMatchers(HttpMethod.POST, "/api/acolhimento/form").permitAll()
 

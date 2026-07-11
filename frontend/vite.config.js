@@ -14,6 +14,10 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+        // Ao enviar a requisição, mascara a origem para o backend achar que vem dele mesmo
+        headers: {
+          Origin: 'http://localhost:8080'
+        }
       }
     }
   }
