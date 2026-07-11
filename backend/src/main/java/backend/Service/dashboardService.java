@@ -5,6 +5,7 @@ import backend.Enum.humor;
 import backend.Enum.statusDenuncia;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
+import backend.Model.Dto.dashboard.humorGeralDto;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAdjusters;
 
 @Service
@@ -39,7 +39,23 @@ public class dashboardService {
         return new contagemSemanaDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
 
-    public humor humorMaisFrequente() {
-        return acolhimentoJpaRepository.findFirstByOrderByHumor();
+    public humorGeralDto humorMaisFrequente() {
+        humor humorgeral = acolhimentoJpaRepository.findFirstByOrderByHumor();
+        humorGeralDto dto = new humorGeralDto();
+        if (humorgeral == null) {
+            dto.setHumor(humor.NEUTRO.getHumor());
+            dto.setDescricao("Nenhum humor registrado");
+        } else {
+            dto.setHumor(humorgeral.getHumor());
+            switch (humorgeral) {
+                case MUITO_TRISTE -> dto.setDescricao("Intervenção Imediata Necessária");
+                case TRISTE         -> dto.setDescricao("Demanda por Acolhimento em Alta");
+                case NEUTRO         -> dto.setDescricao("Clima sob Controle");
+                case FELIZ          -> dto.setDescricao("Ambiente Harmônico");
+                case MUITO_FELIZ    -> dto.setDescricao("Clima Extremamente Seguro");
+            }
+        }
+
+        return dto;
     }
 }

@@ -4,6 +4,7 @@ import backend.Controller.Route.rotas;
 import backend.Enum.humor;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
+import backend.Model.Dto.dashboard.humorGeralDto;
 import backend.Service.dashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class dashboardController {
 
     @GetMapping("/humorGeral")
     public ResponseEntity<?> humorGeral() {
-        humor humor = dashboardService.humorMaisFrequente();
+        humorGeralDto humor = dashboardService.humorMaisFrequente();
         return ResponseEntity.status(HttpStatus.OK).body(humor);
     }
 

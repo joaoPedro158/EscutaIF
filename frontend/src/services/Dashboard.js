@@ -19,3 +19,13 @@ export const getDashboardSemanal = async () => {
         throw error;
     }
 };
+
+export const getDashboardHumor = async () => {
+    try {
+        const response = await api.get('/dashboard/humorGeral');
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar contagem de humor do dashboard:', error);
+        throw error;
+    }
+};

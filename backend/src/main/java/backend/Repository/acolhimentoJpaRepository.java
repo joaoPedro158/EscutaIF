@@ -14,7 +14,7 @@ public interface acolhimentoJpaRepository extends JpaRepository<acolhimentoEntit
     long contarRegistroSemana(@Param("inicioDaSemana") LocalDateTime inicioDaSemana);
 
     @Query("select a.humor from acolhimentoEntity a " +
-            "group by a.humor " + // Espaço aqui no final da string
-            "order by count(a) desc")
+            "group by a.humor " +
+            "order by count(a) desc limit 1")
     humor findFirstByOrderByHumor();
 }

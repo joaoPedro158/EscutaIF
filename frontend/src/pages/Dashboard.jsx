@@ -6,21 +6,23 @@ import SentimentChart from '../components/SentimentChart'
 import CategoryChart from '../components/CategoryChart'
 import ReportsTable from '../components/ReportsTable'
 import BotaoAdicionarAdmin from '../components/BotaoAdicionarAdmin'
-import { getDashboardCount, getDashboardSemanal } from '../services/Dashboard'
+import { getDashboardCount, getDashboardSemanal,getDashboardHumor } from '../services/Dashboard'
 
 function Dashboard() {
   const [counts, setCounts] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
   const [semanal, setSemanal] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
-
+  const [humor, setHumor] = useState({humor: 'NEUTRO'})
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [countData, semanalData] = await Promise.all([
+        const [countData, semanalData, humorData] = await Promise.all([
           getDashboardCount(),
-          getDashboardSemanal()
+          getDashboardSemanal(),
+          getDashboardHumor()
         ])
         if (countData) setCounts(countData)
         if (semanalData) setSemanal(semanalData)
+        if (humorData) setHumor(humorData)
       } catch (error) {
         console.error("Erro ao carregar os dados do dashboard:", error)
       }
@@ -32,7 +34,7 @@ function Dashboard() {
     { title: 'Acolhimentos', value: counts.qtdAcolhimento, subtitle: `+${semanal.qtdAcolhimento} esta semana` },
     { title: 'Denúncias', value: counts.qtdDenuncia, subtitle: `+${semanal.qtdDenuncia} esta semana` },
     { title: 'Pendências', value: counts.qtdPedente, subtitle: `+${semanal.qtdPedente} esta semana` },
-    { title: 'Sentimento Geral', value: 'Neutro', highlighted: true, subtitle: 'Tendência estável' }
+    { title: 'Sentimento Geral', value: humor.humor, highlighted: true, subtitle: humor.descricao }
   ]
 
   return (
