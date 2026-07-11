@@ -1,6 +1,7 @@
 package backend.Controller;
 
 import backend.Controller.Route.rotas;
+import backend.Enum.humor;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
 import backend.Service.dashboardService;
@@ -30,5 +31,10 @@ public class dashboardController {
         return ResponseEntity.status(HttpStatus.OK).body(contagem);
     }
 
+    @GetMapping("/humorGeral")
+    public ResponseEntity<?> humorGeral() {
+        humor humor = dashboardService.humorMaisFrequente();
+        return ResponseEntity.status(HttpStatus.OK).body(humor);
+    }
 
 }

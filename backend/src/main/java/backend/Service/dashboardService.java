@@ -1,6 +1,7 @@
 package backend.Service;
 
 
+import backend.Enum.humor;
 import backend.Enum.statusDenuncia;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
@@ -36,5 +37,9 @@ public class dashboardService {
         long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana);
         long qtdPedente = denunciaJpaRepository.contarRegistroSemanaStatus(inicioDaSemana, statusDenuncia.PENDENTE);
         return new contagemSemanaDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
+    }
+
+    public humor humorMaisFrequente() {
+        return acolhimentoJpaRepository.findFirstByOrderByHumor();
     }
 }
