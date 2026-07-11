@@ -3,6 +3,8 @@ package backend.Model;
 import backend.Enum.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @Setter

@@ -1,11 +1,18 @@
 package backend.Service;
 
 
+import backend.Enum.statusDenuncia;
+import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjusters;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +24,17 @@ public class dashboardService {
     public countDto count() {
         long qtdAcolhimento = acolhimentoJpaRepository.count();
         long qtdDenuncia = denunciaJpaRepository.count();
-        return new countDto(qtdAcolhimento, qtdDenuncia);
+        long qtdPedente = denunciaJpaRepository.countByStatus(statusDenuncia.PENDENTE);
+        return new countDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
+    }
+
+    public contagemSemanaDto contagemSemana() {
+        LocalDateTime hojeMeiaNoite = LocalDateTime.now().with(LocalTime.MIN);
+        LocalDateTime inicioDaSemana = hojeMeiaNoite.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.SUNDAY));
+
+        long qtdAcolhimento = acolhimentoJpaRepository.contarRegistroSemana(inicioDaSemana);
+        long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana);
+        long qtdPedente = denunciaJpaRepository.contarRegistroSemanaStatus(inicioDaSemana, statusDenuncia.PENDENTE);
+        return new contagemSemanaDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
 }

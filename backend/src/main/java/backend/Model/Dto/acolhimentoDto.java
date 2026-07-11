@@ -2,6 +2,10 @@ package backend.Model.Dto;
 
 import backend.Enum.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder

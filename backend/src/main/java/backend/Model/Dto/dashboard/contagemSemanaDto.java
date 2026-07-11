@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class countDto {
+public class contagemSemanaDto {
     long qtdAcolhimento;
     long qtdDenuncia;
     long qtdPedente;

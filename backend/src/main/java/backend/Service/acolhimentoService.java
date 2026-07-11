@@ -33,10 +33,11 @@ public class acolhimentoService {
             throw new campoNuloException("o campo turno não pode ser nulo");
         }
 
-
-
         acolhimentoEntity entity = mapper.toEntity(acolhimentoModel);
         acolhimentoJpaRepository.save(entity);
         return mapper.toDto(acolhimentoModel);
     }
+
+
+
 }

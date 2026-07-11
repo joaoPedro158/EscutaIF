@@ -6,6 +6,11 @@ import backend.Enum.genero;
 import backend.Enum.turno;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -13,6 +18,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "acolhimento")
+@EntityListeners(AuditingEntityListener.class)
 public class acolhimentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +37,10 @@ public class acolhimentoEntity {
     private turno turno;
 
     private Integer periodo;
+
+    @CreatedDate
+    private LocalDateTime criado_em;
+
+    @LastModifiedDate
+    private LocalDateTime atualizado_em;
 }

@@ -1,5 +1,6 @@
 package backend.Model.Dto.Record;
 
+import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Size;

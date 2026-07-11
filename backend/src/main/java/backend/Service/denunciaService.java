@@ -1,5 +1,6 @@
 package backend.Service;
 
+import backend.Enum.statusDenuncia;
 import backend.Model.Dto.Record.denunciaRecord;
 import backend.Model.Dto.denunciaDto;
 import backend.Model.Mapper.denunciaMapper;
@@ -18,6 +19,7 @@ public class denunciaService {
 
     public denunciaDto salvaDenuncia(denunciaRecord denunciaRecord) {
         denuncia denunciaModel = denunciaMapper.toModel(denunciaRecord);
+        denunciaModel.setStatus(statusDenuncia.PENDENTE);
 
         if( denunciaModel.getPessoaAfetada() == null || denunciaModel.getPessoaAfetada().trim().isEmpty()) {
             denunciaModel.setPessoaAfetada("Anonimo");

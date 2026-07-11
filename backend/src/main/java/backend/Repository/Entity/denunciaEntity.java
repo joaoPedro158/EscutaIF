@@ -1,9 +1,13 @@
 package backend.Repository.Entity;
 
+import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Setter
@@ -11,6 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "denuncia")
+@EntityListeners(AuditingEntityListener.class)
 public class denunciaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +31,13 @@ public class denunciaEntity {
     private String nome;
     private String email;
     private String telefone;
+
+    @Enumerated(EnumType.STRING)
+    private statusDenuncia status;
+
+    @CreatedDate
+    private LocalDateTime criado_em;
+
+    @LastModifiedDate
+    private LocalDateTime atualizado_em;
 }

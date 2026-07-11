@@ -1,6 +1,7 @@
 package backend.Controller;
 
 import backend.Controller.Route.rotas;
+import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
 import backend.Service.dashboardService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,12 @@ public class dashboardController {
     public ResponseEntity<?> contarDenuncias() {
         countDto count = dashboardService.count();
         return ResponseEntity.status(HttpStatus.OK).body(count);
+    }
+
+    @GetMapping("/semanal")
+    public ResponseEntity<?> semanal() {
+        contagemSemanaDto contagem = dashboardService.contagemSemana();
+        return ResponseEntity.status(HttpStatus.OK).body(contagem);
     }
 
 
