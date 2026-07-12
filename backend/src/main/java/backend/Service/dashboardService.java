@@ -6,6 +6,7 @@ import backend.Enum.statusDenuncia;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
 import backend.Model.Dto.dashboard.humorGeralDto;
+import backend.Model.Dto.dashboard.pizzaGrafico;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -57,5 +60,25 @@ public class dashboardService {
         }
 
         return dto;
+    }
+
+    public List<pizzaGrafico> buscaPorcentagemHumor() {
+        List<Object[]> dadosBrutos = acolhimentoJpaRepository.contarHumorAgrupados();
+
+        long registroTotal =  0;
+        for (Object[] dados : dadosBrutos) {
+            registroTotal += (Long) dados[1];
+        }
+        List<pizzaGrafico> pizzas = new ArrayList<>();
+
+        for (Object[] dados : dadosBrutos) {
+            humor humor = (humor) dados[0];
+            long quantidade = (Long) dados[1];
+            double porcentagem = (double) quantidade / registroTotal * 100;
+
+            pizzas.add(new pizzaGrafico(humor.getHumor(), quantidade, porcentagem));
+        }
+        return pizzas;
+
     }
 }

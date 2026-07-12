@@ -5,6 +5,7 @@ import backend.Enum.humor;
 import backend.Model.Dto.dashboard.contagemSemanaDto;
 import backend.Model.Dto.dashboard.countDto;
 import backend.Model.Dto.dashboard.humorGeralDto;
+import backend.Model.Dto.dashboard.pizzaGrafico;
 import backend.Service.dashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(rotas.DASHBOARD)
@@ -36,6 +39,12 @@ public class dashboardController {
     public ResponseEntity<?> humorGeral() {
         humorGeralDto humor = dashboardService.humorMaisFrequente();
         return ResponseEntity.status(HttpStatus.OK).body(humor);
+    }
+
+    @GetMapping("/pizzaGrafico")
+    public ResponseEntity<?> pizzaGrafico() {
+        List<pizzaGrafico> pizzas = dashboardService.buscaPorcentagemHumor();
+        return ResponseEntity.status(HttpStatus.OK).body(pizzas);
     }
 
 }
