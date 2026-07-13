@@ -76,7 +76,7 @@ public class dashboardService {
             long quantidade = (Long) dados[1];
             double porcentagem = (double) quantidade / registroTotal * 100;
 
-            pizzas.add(new pizzaGrafico(humor.getHumor(), quantidade, porcentagem));
+            pizzas.add(new pizzaGrafico(humor.getHumor(), porcentagem));
         }
         return pizzas;
 

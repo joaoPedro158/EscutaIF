@@ -6,23 +6,32 @@ import SentimentChart from '../components/SentimentChart'
 import CategoryChart from '../components/CategoryChart'
 import ReportsTable from '../components/ReportsTable'
 import BotaoAdicionarAdmin from '../components/BotaoAdicionarAdmin'
-import { getDashboardCount, getDashboardSemanal,getDashboardHumor } from '../services/Dashboard'
+import { getDashboardCount, getDashboardSemanal, getDashboardHumor, getDashboardPizzaGrafico } from '../services/Dashboard'
 
 function Dashboard() {
   const [counts, setCounts] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
   const [semanal, setSemanal] = useState({ qtdAcolhimento: 0, qtdDenuncia: 0, qtdPedente: 0 })
   const [humor, setHumor] = useState({humor: 'NEUTRO'})
+  const [pizzaData, setPizzaData] = useState([])
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [countData, semanalData, humorData] = await Promise.all([
+        const [countData, semanalData, humorData, pizzaRes] = await Promise.all([
           getDashboardCount(),
           getDashboardSemanal(),
-          getDashboardHumor()
+          getDashboardHumor(),
+          getDashboardPizzaGrafico()
         ])
         if (countData) setCounts(countData)
         if (semanalData) setSemanal(semanalData)
         if (humorData) setHumor(humorData)
+        if (pizzaRes) {
+          const formattedData = pizzaRes.map(item => ({
+            name: item.humor,
+            value: item.porcentagem
+          }))
+          setPizzaData(formattedData)
+        }
       } catch (error) {
         console.error("Erro ao carregar os dados do dashboard:", error)
       }
@@ -62,7 +71,7 @@ function Dashboard() {
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <SentimentChart />
+          <SentimentChart data={pizzaData} />
           <CategoryChart />
         </div>
 

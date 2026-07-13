@@ -38,7 +38,7 @@ api.interceptors.response.use(
     },
     (error) => {
         // Se o back-end retornar 401, significa que o JWT é inválido ou expirou
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 401 || error.response.status === 403) {
             localStorage.removeItem('@App:token'); // Limpa o token expirado
             
             // Força o redirecionamento nativo para a página de login

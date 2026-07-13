@@ -29,3 +29,13 @@ export const getDashboardHumor = async () => {
         throw error;
     }
 };
+
+export const getDashboardPizzaGrafico = async () => {
+    try {
+        const response = await api.get('/dashboard/pizzaGrafico');
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar dados do grafico de pizza:', error);
+        throw error;
+    }
+};
