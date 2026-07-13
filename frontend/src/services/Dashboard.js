@@ -39,3 +39,13 @@ export const getDashboardPizzaGrafico = async () => {
         throw error;
     }
 };
+
+export const getDashboardCategoriaGrafico = async () => {
+    try {
+        const response = await api.get('/dashboard/categoriaGrafico');
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar dados do grafico de categoria:', error);
+        throw error;
+    }
+};

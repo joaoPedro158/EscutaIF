@@ -2,10 +2,7 @@ package backend.Controller;
 
 import backend.Controller.Route.rotas;
 import backend.Enum.humor;
-import backend.Model.Dto.dashboard.contagemSemanaDto;
-import backend.Model.Dto.dashboard.countDto;
-import backend.Model.Dto.dashboard.humorGeralDto;
-import backend.Model.Dto.dashboard.pizzaGrafico;
+import backend.Model.Dto.dashboard.*;
 import backend.Service.dashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,6 +42,12 @@ public class dashboardController {
     public ResponseEntity<?> pizzaGrafico() {
         List<pizzaGrafico> pizzas = dashboardService.buscaPorcentagemHumor();
         return ResponseEntity.status(HttpStatus.OK).body(pizzas);
+    }
+
+    @GetMapping("/categoriaGrafico")
+    public ResponseEntity<?> categoriaGrafico() {
+        List<categoriaGraficoDto> categorias = dashboardService.buscaPorCategoria();
+        return ResponseEntity.status(HttpStatus.OK).body(categorias);
     }
 
 }

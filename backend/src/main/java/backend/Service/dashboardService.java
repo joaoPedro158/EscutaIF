@@ -3,10 +3,8 @@ package backend.Service;
 
 import backend.Enum.humor;
 import backend.Enum.statusDenuncia;
-import backend.Model.Dto.dashboard.contagemSemanaDto;
-import backend.Model.Dto.dashboard.countDto;
-import backend.Model.Dto.dashboard.humorGeralDto;
-import backend.Model.Dto.dashboard.pizzaGrafico;
+import backend.Enum.tipoDenuncia;
+import backend.Model.Dto.dashboard.*;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
@@ -80,5 +78,17 @@ public class dashboardService {
         }
         return pizzas;
 
+    }
+
+    public List<categoriaGraficoDto> buscaPorCategoria() {
+        List<Object[]> dadosBrutos = denunciaJpaRepository.QuantidadePorTipo();
+
+        List<categoriaGraficoDto> categorias = new ArrayList<>();
+        for (Object[] dados : dadosBrutos) {
+            tipoDenuncia tipo = (tipoDenuncia) dados[0];
+            long quantidade = (Long) dados[1];
+            categorias.add(new categoriaGraficoDto(tipo.getTo_string(), quantidade));
+        }
+        return categorias;
     }
 }
