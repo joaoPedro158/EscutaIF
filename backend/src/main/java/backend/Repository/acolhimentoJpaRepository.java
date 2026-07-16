@@ -1,7 +1,7 @@
 package backend.Repository;
 
+import backend.Enum.curso;
 import backend.Enum.humor;
-import backend.Enum.statusDenuncia;
 import backend.Repository.Entity.acolhimentoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +22,11 @@ public interface acolhimentoJpaRepository extends JpaRepository<acolhimentoEntit
 
     @Query("select a.humor, count(a) from acolhimentoEntity a group by a.humor")
     List<Object[]> contarHumorAgrupados();
+
+    @Query("select count(a) from acolhimentoEntity a where " +
+            "(:curso is null or a.curso = :curso) and " +
+            "(:periodo is null or a.periodo = :periodo)")
+    long contarAcolhimentos(@Param("curso") curso curso,
+                            @Param("periodo") Integer periodo
+    );
 }

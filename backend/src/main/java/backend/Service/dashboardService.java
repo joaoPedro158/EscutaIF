@@ -1,6 +1,7 @@
 package backend.Service;
 
 
+import backend.Enum.curso;
 import backend.Enum.humor;
 import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
@@ -23,8 +24,8 @@ public class dashboardService {
     private final acolhimentoJpaRepository acolhimentoJpaRepository;
     private final denunciaJpaRepository denunciaJpaRepository;
 
-    public countDto count() {
-        long qtdAcolhimento = acolhimentoJpaRepository.count();
+    public countDto count(curso curso, Integer periodo) {
+        long qtdAcolhimento = acolhimentoJpaRepository.contarAcolhimentos(curso, periodo);
         long qtdDenuncia = denunciaJpaRepository.count();
         long qtdPedente = denunciaJpaRepository.countByStatus(statusDenuncia.PENDENTE);
         return new countDto(qtdAcolhimento, qtdDenuncia, qtdPedente);

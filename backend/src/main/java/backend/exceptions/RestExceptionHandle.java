@@ -1,5 +1,6 @@
 package backend.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -10,6 +11,8 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -75,6 +78,20 @@ public class RestExceptionHandle  {
         ErroResposta erro = new ErroResposta(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
 
         return ResponseEntity.status(ex.getStatus()).body(erro);
+    }
+
+    // Captura erros de validação disparados pelo @Validated nos @RequestParam
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolation(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getConstraintViolations().forEach(violation -> {
+            // Pega o nome do parâmetro e a mensagem de erro configurada
+            String paramName = violation.getPropertyPath().toString().split("\\.")[1];
+            errors.put(paramName, violation.getMessage());
+        });
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
 }

@@ -34,9 +34,8 @@ public class securityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/acolhimento/form").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/denuncias/form").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/dashboard/**").authenticated()
-                        // Se você tiver o formulário de acolhimento público, libere-o aqui também:
-                        // .requestMatchers(HttpMethod.POST, "/api/acolhimento/form").permitAll()
-
+                        .requestMatchers("/error").permitAll()
+              
                         // 2. Todo o restante das rotas (como os gráficos) exigirão o Token JWT
                         .anyRequest().authenticated()
                 )

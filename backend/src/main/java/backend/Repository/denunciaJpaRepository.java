@@ -1,5 +1,6 @@
 package backend.Repository;
 
+import backend.Enum.curso;
 import backend.Enum.statusDenuncia;
 import backend.Repository.Entity.denunciaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
