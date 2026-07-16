@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -82,16 +83,23 @@ public class RestExceptionHandle  {
 
     // Captura erros de validação disparados pelo @Validated nos @RequestParam
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Map<String, String>> handleConstraintViolation(ConstraintViolationException ex) {
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<ErroResposta> handleConstraintViolation(ConstraintViolationException ex) {
+        String mensagem = ex.getMessage();
 
-        ex.getConstraintViolations().forEach(violation -> {
-            // Pega o nome do parâmetro e a mensagem de erro configurada
-            String paramName = violation.getPropertyPath().toString().split("\\.")[1];
-            errors.put(paramName, violation.getMessage());
-        });
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        ErroResposta erro = new ErroResposta(
+                HttpStatus.BAD_REQUEST, mensagem, LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
+    
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErroResposta> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String mensagem = ex.getMessage();
+
+        ErroResposta erro = new ErroResposta(
+                HttpStatus.BAD_REQUEST, mensagem, LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
 }
