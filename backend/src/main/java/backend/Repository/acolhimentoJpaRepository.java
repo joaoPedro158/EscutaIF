@@ -11,8 +11,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface acolhimentoJpaRepository extends JpaRepository<acolhimentoEntity, Integer> {
-    @Query("SELECT count(a) from acolhimentoEntity a where a.criado_em >= :inicioDaSemana")
-    long contarRegistroSemana(@Param("inicioDaSemana") LocalDateTime inicioDaSemana);
+    @Query("SELECT count(a) from acolhimentoEntity a where a.criado_em >= :inicioDaSemana " +
+            "and a.criado_em <= :fimDaSemana " +
+            "and (:curso is null or a.curso = :curso) " +
+            "and (:periodo is null or a.periodo = :periodo)")
+    long contarRegistroSemana(@Param("inicioDaSemana") LocalDateTime inicioDaSemana,
+                              @Param("fimDaSemana") LocalDateTime fimDaSemana,
+                              @Param("curso") curso curso,
+                              @Param("periodo") Integer periodo);
 
     @Query("select a.humor from acolhimentoEntity a " +
             "group by a.humor " +
@@ -20,8 +26,12 @@ public interface acolhimentoJpaRepository extends JpaRepository<acolhimentoEntit
     humor findFirstByOrderByHumor();
 
 
-    @Query("select a.humor, count(a) from acolhimentoEntity a group by a.humor")
-    List<Object[]> contarHumorAgrupados();
+    @Query("select a.humor, count(a) from acolhimentoEntity a" +
+            " where (:curso is null or a.curso = :curso) " +
+            " and (:periodo is null or a.periodo = :periodo)" +
+            " group by a.humor ")
+    List<Object[]> contarHumorAgrupados( @Param("curso") curso curso,
+                                         @Param("periodo") Integer periodo);
 
     @Query("select count(a) from acolhimentoEntity a where " +
             "(:curso is null or a.curso = :curso) and " +
@@ -29,4 +39,6 @@ public interface acolhimentoJpaRepository extends JpaRepository<acolhimentoEntit
     long contarAcolhimentos(@Param("curso") curso curso,
                             @Param("periodo") Integer periodo
     );
+
+
 }

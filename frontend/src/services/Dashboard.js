@@ -1,20 +1,32 @@
 import { api } from './api';
 
-export const getDashboardCount = async () => {
+export const getDashboardCount = async (curso = '', periodo = '') => {
     try {
-        const response = await api.get('/dashboard/count');
+        const response = await api.get('/dashboard/count', {
+            params: { curso, periodo }
+        });
         return response.data;
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (count):', error.response.data.mensagem);
+            throw error.response.data;
+        }
         console.error('Erro ao buscar contagem do dashboard:', error);
         throw error;
     }
 };
 
-export const getDashboardSemanal = async () => {
+export const getDashboardSemanal = async (curso = '', periodo = '') => {
     try {
-        const response = await api.get('/dashboard/semanal');
+        const response = await api.get('/dashboard/semanal', {
+            params: { curso, periodo }
+        });
         return response.data;
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (semanal):', error.response.data.mensagem);
+            throw error.response.data;
+        }
         console.error('Erro ao buscar contagem semanal do dashboard:', error);
         throw error;
     }
@@ -30,21 +42,33 @@ export const getDashboardHumor = async () => {
     }
 };
 
-export const getDashboardPizzaGrafico = async () => {
+export const getDashboardPizzaGrafico = async (curso = '', periodo = '') => {
     try {
-        const response = await api.get('/dashboard/pizzaGrafico');
+        const response = await api.get('/dashboard/pizzaGrafico', {
+            params: { curso, periodo }
+        });
         return response.data;
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (pizzaGrafico):', error.response.data.mensagem);
+            throw error.response.data;
+        }
         console.error('Erro ao buscar dados do grafico de pizza:', error);
         throw error;
     }
 };
 
-export const getDashboardCategoriaGrafico = async () => {
+export const getDashboardCategoriaGrafico = async (tipodenuncia = '') => {
     try {
-        const response = await api.get('/dashboard/categoriaGrafico');
+        const response = await api.get('/dashboard/categoriaGrafico', {
+            params: { tipodenuncia }
+        });
         return response.data;
     } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (categoriaGrafico):', error.response.data.mensagem);
+            throw error.response.data;
+        }
         console.error('Erro ao buscar dados do grafico de categoria:', error);
         throw error;
     }

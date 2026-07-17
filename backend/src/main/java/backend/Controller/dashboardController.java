@@ -3,6 +3,7 @@ package backend.Controller;
 import backend.Controller.Route.rotas;
 import backend.Enum.curso;
 import backend.Enum.humor;
+import backend.Enum.tipoDenuncia;
 import backend.Model.Dto.dashboard.*;
 import backend.Service.dashboardService;
 import jakarta.validation.constraints.Max;
@@ -41,17 +42,17 @@ public class dashboardController {
     @GetMapping("/semanal")
     public ResponseEntity<?> semanal(
             @RequestParam(required = false) curso curso,
+
+            @Min( value = 1, message = "O período deve ser maior ou igual a 1")
+            @Max( value = 8, message = "O período deve ser menor ou igual a 8")
             @RequestParam(required = false) Integer periodo
     ) {
-        contagemSemanaDto contagem = dashboardService.contagemSemana();
+        contagemSemanaDto contagem = dashboardService.contagemSemana(curso, periodo);
         return ResponseEntity.status(HttpStatus.OK).body(contagem);
     }
 
     @GetMapping("/humorGeral")
-    public ResponseEntity<?> humorGeral(
-            @RequestParam(required = false) curso curso,
-            @RequestParam(required = false) Integer periodo
-    ) {
+    public ResponseEntity<?> humorGeral() {
         humorGeralDto humor = dashboardService.humorMaisFrequente();
         return ResponseEntity.status(HttpStatus.OK).body(humor);
     }
@@ -59,18 +60,20 @@ public class dashboardController {
     @GetMapping("/pizzaGrafico")
     public ResponseEntity<?> pizzaGrafico(
             @RequestParam(required = false) curso curso,
+
+            @Min( value = 1, message = "O período deve ser maior ou igual a 1")
+            @Max( value = 8, message = "O período deve ser menor ou igual a 8")
             @RequestParam(required = false) Integer periodo
     ) {
-        List<pizzaGrafico> pizzas = dashboardService.buscaPorcentagemHumor();
+        List<pizzaGrafico> pizzas = dashboardService.buscaPorcentagemHumor(curso, periodo);
         return ResponseEntity.status(HttpStatus.OK).body(pizzas);
     }
 
     @GetMapping("/categoriaGrafico")
     public ResponseEntity<?> categoriaGrafico(
-            @RequestParam(required = false) curso curso,
-            @RequestParam(required = false) Integer periodo
+            @RequestParam(required = false) tipoDenuncia tipodenuncia
     ) {
-        List<categoriaGraficoDto> categorias = dashboardService.buscaPorCategoria();
+        List<categoriaGraficoDto> categorias = dashboardService.buscaPorCategoria(tipodenuncia);
         return ResponseEntity.status(HttpStatus.OK).body(categorias);
     }
 
