@@ -31,12 +31,14 @@ public class dashboardService {
         return new countDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
 
-    public contagemSemanaDto contagemSemana() {
+    public contagemSemanaDto contagemSemana(curso curso, Integer periodo) {
         LocalDateTime hojeMeiaNoite = LocalDateTime.now().with(LocalTime.MIN);
         LocalDateTime inicioDaSemana = hojeMeiaNoite.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.SUNDAY));
+        LocalDateTime proximoDomingo = hojeMeiaNoite.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
+        LocalDateTime fimDaSemana = proximoDomingo.with(LocalTime.MAX);
 
-        long qtdAcolhimento = acolhimentoJpaRepository.contarRegistroSemana(inicioDaSemana);
-        long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana);
+        long qtdAcolhimento = acolhimentoJpaRepository.contarRegistroSemana(inicioDaSemana,fimDaSemana,curso,periodo );
+        long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana, fimDaSemana);
         long qtdPedente = denunciaJpaRepository.contarRegistroSemanaStatus(inicioDaSemana, statusDenuncia.PENDENTE);
         return new contagemSemanaDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
@@ -61,8 +63,8 @@ public class dashboardService {
         return dto;
     }
 
-    public List<pizzaGrafico> buscaPorcentagemHumor() {
-        List<Object[]> dadosBrutos = acolhimentoJpaRepository.contarHumorAgrupados();
+    public List<pizzaGrafico> buscaPorcentagemHumor(curso curso, Integer periodo) {
+        List<Object[]> dadosBrutos = acolhimentoJpaRepository.contarHumorAgrupados(curso, periodo);
 
         long registroTotal =  0;
         for (Object[] dados : dadosBrutos) {
@@ -81,8 +83,8 @@ public class dashboardService {
 
     }
 
-    public List<categoriaGraficoDto> buscaPorCategoria() {
-        List<Object[]> dadosBrutos = denunciaJpaRepository.QuantidadePorTipo();
+    public List<categoriaGraficoDto> buscaPorCategoria(tipoDenuncia tipodenuncia) {
+        List<Object[]> dadosBrutos = denunciaJpaRepository.QuantidadePorTipo(tipodenuncia);
 
         List<categoriaGraficoDto> categorias = new ArrayList<>();
         for (Object[] dados : dadosBrutos) {

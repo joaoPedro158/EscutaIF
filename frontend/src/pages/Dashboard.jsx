@@ -14,15 +14,22 @@ function Dashboard() {
   const [humor, setHumor] = useState({humor: 'NEUTRO'})
   const [pizzaData, setPizzaData] = useState([])
   const [categoriaData, setCategoriaData] = useState([])
+  const [filters, setFilters] = useState({ curso: '', periodo: '', tipodenuncia: '' })
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }))
+  }
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
+        setErrorMsg('')
         const [countData, semanalData, humorData, pizzaRes, categoriaRes] = await Promise.all([
-          getDashboardCount(),
-          getDashboardSemanal(),
+          getDashboardCount(filters.curso, filters.periodo),
+          getDashboardSemanal(filters.curso, filters.periodo),
           getDashboardHumor(),
-          getDashboardPizzaGrafico(),
-          getDashboardCategoriaGrafico()
+          getDashboardPizzaGrafico(filters.curso, filters.periodo),
+          getDashboardCategoriaGrafico(filters.tipodenuncia)
         ])
         if (countData) setCounts(countData)
         if (semanalData) setSemanal(semanalData)
@@ -42,11 +49,14 @@ function Dashboard() {
           setCategoriaData(formattedCatData)
         }
       } catch (error) {
+        if (error.mensagem) {
+          setErrorMsg(error.mensagem)
+        }
         console.error("Erro ao carregar os dados do dashboard:", error)
       }
     }
     fetchDashboardData()
-  }, [])
+  }, [filters])
 
   const stats = [
     { title: 'Acolhimentos', value: counts.qtdAcolhimento, subtitle: `+${semanal.qtdAcolhimento} esta semana` },
@@ -69,7 +79,12 @@ function Dashboard() {
           <BotaoAdicionarAdmin />
         </div>
         {/* Filters */}
-        <DashboardFilters />
+        {errorMsg && (
+          <div className="mb-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg border border-red-200">
+            {errorMsg}
+          </div>
+        )}
+        <DashboardFilters filters={filters} onFilterChange={handleFilterChange} />
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
