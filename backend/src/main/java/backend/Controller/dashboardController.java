@@ -77,4 +77,10 @@ public class dashboardController {
         return ResponseEntity.status(HttpStatus.OK).body(categorias);
     }
 
+    @GetMapping("/relatorio")
+    public ResponseEntity<?> relatorio() {
+        List<relatorioDto> relatorios = dashboardService.relatorio();
+        return ResponseEntity.status(HttpStatus.OK).body(relatorios);
+    }
+
 }
