@@ -29,6 +29,10 @@ public class denunciaService {
             denunciaModel.setNome("Anonimo");
         }
 
+        if (denunciaModel.getLocal() == null || denunciaModel.getLocal().trim().isEmpty()) {
+            denunciaModel.setLocal("Sem local declarado");
+        }
+
         denunciaEntity entity = denunciaMapper.toEntity(denunciaModel);
         denunciaEntity savedEntity = denunciaJpaRepository.save(entity);
         denunciaModel.setId(savedEntity.getId());
