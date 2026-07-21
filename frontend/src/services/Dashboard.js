@@ -73,3 +73,20 @@ export const getDashboardCategoriaGrafico = async (tipodenuncia = '') => {
         throw error;
     }
 };
+
+export const getDashboardRelatorio = async (page = 0) => {
+    try {
+        const response = await api.get('/dashboard/relatorio', {
+            params: { page }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (relatorio):', error.response.data.mensagem);
+            throw error.response.data;
+        }
+        console.error('Erro ao buscar relatórios do dashboard:', error);
+        throw error;
+    }
+};
+

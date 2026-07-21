@@ -9,6 +9,7 @@ import backend.Service.dashboardService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -78,8 +79,10 @@ public class dashboardController {
     }
 
     @GetMapping("/relatorio")
-    public ResponseEntity<?> relatorio() {
-        List<relatorioDto> relatorios = dashboardService.relatorio();
+    public ResponseEntity<?> relatorio(
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        Page<relatorioDto> relatorios = dashboardService.relatorio(page);
         return ResponseEntity.status(HttpStatus.OK).body(relatorios);
     }
 

@@ -3,15 +3,18 @@ package backend.Repository;
 import backend.Enum.curso;
 import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
+import backend.Model.Dto.dashboard.relatorioDto;
 import backend.Repository.Entity.denunciaEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Integer> {
+public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Long> {
     long countByStatus(statusDenuncia status);
 
     @Query("SELECT count(a) from denunciaEntity a where a.criado_em >= :inicioDaSemana" +
@@ -29,4 +32,8 @@ public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Int
     List<Object[]> QuantidadePorTipo(
             @Param("tipodenuncia") tipoDenuncia tipodenuncia
     );
+
+    @Query("select new backend.Model.Dto.dashboard.relatorioDto(" +
+            "d.nome, d.tipoDenuncia, d.status, d.criado_em, d.dataIncidente) from denunciaEntity d")
+    Page<relatorioDto> relatorio(Pageable pageable);
 }

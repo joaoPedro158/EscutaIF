@@ -9,8 +9,12 @@ import backend.Model.Dto.dashboard.*;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
@@ -93,5 +97,16 @@ public class dashboardService {
             categorias.add(new categoriaGraficoDto(tipo.getTo_string(), quantidade));
         }
         return categorias;
+    }
+
+    public Page<relatorioDto> relatorio(int pagina) {
+
+        Pageable pageable = PageRequest.of(
+                pagina,
+                10,
+                Sort.by("criado_em").descending()
+        );
+
+        return denunciaJpaRepository.relatorio(pageable);
     }
 }
