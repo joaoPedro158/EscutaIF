@@ -34,9 +34,11 @@ public class dashboardController {
 
             @Min( value = 1, message = "O período deve ser maior ou igual a 1")
             @Max( value = 8, message = "O período deve ser menor ou igual a 8")
-            @RequestParam(required = false) Integer periodo
+            @RequestParam(required = false) Integer periodo,
+
+            @RequestParam(required = false) tipoDenuncia tipoDenuncia
     ) {
-        countDto count = dashboardService.count(curso, periodo);
+        countDto count = dashboardService.count(curso, periodo, tipoDenuncia);
         return ResponseEntity.status(HttpStatus.OK).body(count);
     }
 
@@ -46,9 +48,11 @@ public class dashboardController {
 
             @Min( value = 1, message = "O período deve ser maior ou igual a 1")
             @Max( value = 8, message = "O período deve ser menor ou igual a 8")
-            @RequestParam(required = false) Integer periodo
+            @RequestParam(required = false) Integer periodo,
+
+            @RequestParam(required = false) tipoDenuncia tipoDenuncia
     ) {
-        contagemSemanaDto contagem = dashboardService.contagemSemana(curso, periodo);
+        contagemSemanaDto contagem = dashboardService.contagemSemana(curso, periodo, tipoDenuncia);
         return ResponseEntity.status(HttpStatus.OK).body(contagem);
     }
 

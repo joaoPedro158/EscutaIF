@@ -15,13 +15,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Long> {
-    long countByStatus(statusDenuncia status);
+
+    @Query(" select count(d) from denunciaEntity d " +
+            " where (:tipoDenuncia is null or d.tipoDenuncia = :tipoDenuncia)" +
+            " and (:statusDenuncia is null or d.status = :statusDenuncia)")
+    long contarDenunciasPorStatus(
+            @Param("tipoDenuncia") tipoDenuncia tipoDenuncia,
+            @Param("statusDenuncia") statusDenuncia statusDenuncia
+    );
 
     @Query("SELECT count(a) from denunciaEntity a where a.criado_em >= :inicioDaSemana" +
-            " and a.criado_em <= :fimDaSemana")
+            " and a.criado_em <= :fimDaSemana" +
+            " and (:tipoDenuncia is null or a.tipoDenuncia = :tipoDenuncia)")
     long contarRegistroSemana(@Param("inicioDaSemana") LocalDateTime inicioDaSemana,
-                              @Param("fimDaSemana") LocalDateTime fimDaSemana);
-
+                              @Param("fimDaSemana") LocalDateTime fimDaSemana,
+                              @Param("tipoDenuncia") tipoDenuncia tipoDenuncia);
 
     @Query("SELECT count(a) from denunciaEntity a where a.criado_em >= :inicioDaSemana and a.status = :status")
     long contarRegistroSemanaStatus(@Param("inicioDaSemana") LocalDateTime inicioDaSemana,  @Param("status") statusDenuncia status);

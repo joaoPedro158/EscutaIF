@@ -1,9 +1,9 @@
 import { api } from './api';
 
-export const getDashboardCount = async (curso = '', periodo = '') => {
+export const getDashboardCount = async (curso = '', periodo = '', tipoDenuncia = '') => {
     try {
         const response = await api.get('/dashboard/count', {
-            params: { curso, periodo }
+            params: { curso, periodo, tipoDenuncia }
         });
         return response.data;
     } catch (error) {
@@ -16,10 +16,10 @@ export const getDashboardCount = async (curso = '', periodo = '') => {
     }
 };
 
-export const getDashboardSemanal = async (curso = '', periodo = '') => {
+export const getDashboardSemanal = async (curso = '', periodo = '', tipoDenuncia = '') => {
     try {
         const response = await api.get('/dashboard/semanal', {
-            params: { curso, periodo }
+            params: { curso, periodo, tipoDenuncia }
         });
         return response.data;
     } catch (error) {

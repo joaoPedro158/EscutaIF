@@ -42,8 +42,8 @@ export default function DashboardFilters({ filters, onFilterChange }) {
       </div>
       <div className="relative flex-1 min-w-0">
         <select 
-          value={filters.tipodenuncia}
-          onChange={(e) => onFilterChange('tipodenuncia', e.target.value)}
+          value={filters.tipoDenuncia}
+          onChange={(e) => onFilterChange('tipoDenuncia', e.target.value)}
           className="w-full appearance-none rounded-lg border border-[#f0eee9] bg-white px-4 py-3 pr-10 text-[#3d4943] hover:bg-[#fbf9f4] transition-colors focus:outline-none"
         >
           <option value="">Todos os Tipos</option>

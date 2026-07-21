@@ -14,7 +14,7 @@ function Dashboard() {
   const [humor, setHumor] = useState({humor: 'NEUTRO'})
   const [pizzaData, setPizzaData] = useState([])
   const [categoriaData, setCategoriaData] = useState([])
-  const [filters, setFilters] = useState({ curso: '', periodo: '', tipodenuncia: '' })
+  const [filters, setFilters] = useState({ curso: '', periodo: '', tipoDenuncia: '' })
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleFilterChange = (key, value) => {
@@ -25,8 +25,8 @@ function Dashboard() {
       try {
         setErrorMsg('')
         const [countData, semanalData, humorData, pizzaRes, categoriaRes] = await Promise.all([
-          getDashboardCount(filters.curso, filters.periodo),
-          getDashboardSemanal(filters.curso, filters.periodo),
+          getDashboardCount(filters.curso, filters.periodo, filters.tipoDenuncia),
+          getDashboardSemanal(filters.curso, filters.periodo, filters.tipoDenuncia),
           getDashboardHumor(),
           getDashboardPizzaGrafico(filters.curso, filters.periodo),
           getDashboardCategoriaGrafico()

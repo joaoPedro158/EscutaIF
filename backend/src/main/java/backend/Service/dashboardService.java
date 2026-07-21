@@ -31,21 +31,21 @@ public class dashboardService {
     private final acolhimentoJpaRepository acolhimentoJpaRepository;
     private final denunciaJpaRepository denunciaJpaRepository;
 
-    public countDto count(curso curso, Integer periodo) {
+    public countDto count(curso curso, Integer periodo, tipoDenuncia tipoDenuncia) {
         long qtdAcolhimento = acolhimentoJpaRepository.contarAcolhimentos(curso, periodo);
-        long qtdDenuncia = denunciaJpaRepository.count();
-        long qtdPedente = denunciaJpaRepository.countByStatus(statusDenuncia.PENDENTE);
+        long qtdDenuncia = denunciaJpaRepository.contarDenunciasPorStatus(tipoDenuncia, null);
+        long qtdPedente = denunciaJpaRepository.contarDenunciasPorStatus(tipoDenuncia, statusDenuncia.PENDENTE);
         return new countDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
 
-    public contagemSemanaDto contagemSemana(curso curso, Integer periodo) {
+    public contagemSemanaDto contagemSemana(curso curso, Integer periodo, tipoDenuncia tipoDenuncia) {
         LocalDateTime hojeMeiaNoite = LocalDateTime.now().with(LocalTime.MIN);
         LocalDateTime inicioDaSemana = hojeMeiaNoite.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.SUNDAY));
         LocalDateTime proximoDomingo = hojeMeiaNoite.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
         LocalDateTime fimDaSemana = proximoDomingo.with(LocalTime.MAX);
 
         long qtdAcolhimento = acolhimentoJpaRepository.contarRegistroSemana(inicioDaSemana,fimDaSemana,curso,periodo );
-        long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana, fimDaSemana);
+        long qtdDenuncia = denunciaJpaRepository.contarRegistroSemana(inicioDaSemana, fimDaSemana, tipoDenuncia);
         long qtdPedente = denunciaJpaRepository.contarRegistroSemanaStatus(inicioDaSemana, statusDenuncia.PENDENTE);
         return new contagemSemanaDto(qtdAcolhimento, qtdDenuncia, qtdPedente);
     }
