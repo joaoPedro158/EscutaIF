@@ -58,11 +58,9 @@ export const getDashboardPizzaGrafico = async (curso = '', periodo = '') => {
     }
 };
 
-export const getDashboardCategoriaGrafico = async (tipodenuncia = '') => {
+export const getDashboardCategoriaGrafico = async () => {
     try {
-        const response = await api.get('/dashboard/categoriaGrafico', {
-            params: { tipodenuncia }
-        });
+        const response = await api.get('/dashboard/categoriaGrafico');
         return response.data;
     } catch (error) {
         if (error.response && error.response.data && error.response.data.mensagem) {

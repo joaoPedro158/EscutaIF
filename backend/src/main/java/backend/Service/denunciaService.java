@@ -25,8 +25,8 @@ public class denunciaService {
             denunciaModel.setPessoaAfetada("Anonimo");
         }
 
-        if (denunciaModel.getDescricao() == null || denunciaModel.getDescricao().trim().isEmpty()) {
-            denunciaModel.setDescricao("Sem descrição");
+        if(denunciaModel.getNome() == null || denunciaModel.getNome().trim().isEmpty()) {
+            denunciaModel.setNome("Anonimo");
         }
 
         denunciaEntity entity = denunciaMapper.toEntity(denunciaModel);

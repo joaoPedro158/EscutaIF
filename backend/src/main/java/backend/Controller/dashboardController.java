@@ -71,10 +71,8 @@ public class dashboardController {
     }
 
     @GetMapping("/categoriaGrafico")
-    public ResponseEntity<?> categoriaGrafico(
-            @RequestParam(required = false) tipoDenuncia tipodenuncia
-    ) {
-        List<categoriaGraficoDto> categorias = dashboardService.buscaPorCategoria(tipodenuncia);
+    public ResponseEntity<?> categoriaGrafico() {
+        List<categoriaGraficoDto> categorias = dashboardService.buscaPorCategoria();
         return ResponseEntity.status(HttpStatus.OK).body(categorias);
     }
 

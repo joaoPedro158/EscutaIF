@@ -29,7 +29,7 @@ function Dashboard() {
           getDashboardSemanal(filters.curso, filters.periodo),
           getDashboardHumor(),
           getDashboardPizzaGrafico(filters.curso, filters.periodo),
-          getDashboardCategoriaGrafico(filters.tipodenuncia)
+          getDashboardCategoriaGrafico()
         ])
         if (countData) setCounts(countData)
         if (semanalData) setSemanal(semanalData)

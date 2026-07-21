@@ -27,11 +27,8 @@ public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Lon
     long contarRegistroSemanaStatus(@Param("inicioDaSemana") LocalDateTime inicioDaSemana,  @Param("status") statusDenuncia status);
 
     @Query("select d.tipoDenuncia, count(d) from denunciaEntity d " +
-            " where (:tipodenuncia is null or d.tipoDenuncia = :tipodenuncia) " +
             " group by d.tipoDenuncia")
-    List<Object[]> QuantidadePorTipo(
-            @Param("tipodenuncia") tipoDenuncia tipodenuncia
-    );
+    List<Object[]> QuantidadePorTipo();
 
     @Query("select new backend.Model.Dto.dashboard.relatorioDto(" +
             "d.nome, d.tipoDenuncia, d.status, d.criado_em, d.dataIncidente) from denunciaEntity d")

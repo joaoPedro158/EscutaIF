@@ -99,8 +99,8 @@ public class dashboardService {
 
     }
 
-    public List<categoriaGraficoDto> buscaPorCategoria(tipoDenuncia tipodenuncia) {
-        List<Object[]> dadosBrutos = denunciaJpaRepository.QuantidadePorTipo(tipodenuncia);
+    public List<categoriaGraficoDto> buscaPorCategoria() {
+        List<Object[]> dadosBrutos = denunciaJpaRepository.QuantidadePorTipo();
 
         List<categoriaGraficoDto> categorias = new ArrayList<>();
         for (Object[] dados : dadosBrutos) {
