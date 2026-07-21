@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class pizzaGrafico {
     private String humor;
-    private double porcentagem;
+    private Double porcentagem;
 }

@@ -15,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
@@ -71,15 +74,24 @@ public class dashboardService {
         List<Object[]> dadosBrutos = acolhimentoJpaRepository.contarHumorAgrupados(curso, periodo);
 
         long registroTotal =  0;
+
         for (Object[] dados : dadosBrutos) {
             registroTotal += (Long) dados[1];
+        }
+
+        if (registroTotal == 0) {
+            return new ArrayList<>();
         }
         List<pizzaGrafico> pizzas = new ArrayList<>();
 
         for (Object[] dados : dadosBrutos) {
             humor humor = (humor) dados[0];
             long quantidade = (Long) dados[1];
-            double porcentagem = (double) quantidade / registroTotal * 100;
+            double porcentagemBruta = (double) quantidade / registroTotal * 100;
+
+            double porcentagem = BigDecimal.valueOf(porcentagemBruta)
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .doubleValue();
 
             pizzas.add(new pizzaGrafico(humor.getHumor(), porcentagem));
         }
