@@ -6,8 +6,7 @@ import DenunciaMainInfoCard from '../components/denuncia-detalhe/DenunciaMainInf
 import DenunciaDetailsCard from '../components/denuncia-detalhe/DenunciaDetailsCard'
 import ProcessTrackingCard from '../components/denuncia-detalhe/ProcessTrackingCard'
 import IdentificationDataCard from '../components/denuncia-detalhe/IdentificationDataCard'
-import { PROCESS_STATUS_LABELS } from '../mocks/detalheDenunciaMock'
-import { getDashboardDenunciaById } from '../services/Dashboard'
+import { getDashboardDenunciaById, atualizarStatusDenuncia } from '../services/Dashboard'
 
 function formatDate(dateString) {
   if (!dateString) return 'Não informada'
@@ -34,8 +33,10 @@ export default function DetalheDenuncia() {
   const [denuncia, setDenuncia] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [selectedStatus, setSelectedStatus] = useState('PENDENTE')
-  const [confirmedStatus, setConfirmedStatus] = useState('PENDENTE')
+
+  const [updatingStatus, setUpdatingStatus] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [updateError, setUpdateError] = useState(null)
 
   const fetchDenuncia = async () => {
     setLoading(true)
@@ -43,10 +44,6 @@ export default function DetalheDenuncia() {
     try {
       const data = await getDashboardDenunciaById(denunciaId)
       setDenuncia(data)
-      if (data && data.status) {
-        setSelectedStatus(data.status)
-        setConfirmedStatus(data.status)
-      }
     } catch (err) {
       console.error('Erro ao carregar detalhes da denúncia:', err)
       setError(err.mensagem || 'Não foi possível carregar os detalhes da denúncia.')
@@ -61,8 +58,25 @@ export default function DetalheDenuncia() {
     }
   }, [denunciaId])
 
-  const handleConfirmStatus = () => {
-    setConfirmedStatus(selectedStatus)
+  const handleUpdateStatus = async () => {
+    if (updatingStatus || isAnimating) return
+    setUpdatingStatus(true)
+    setUpdateError(null)
+
+    try {
+      const updatedData = await atualizarStatusDenuncia(denunciaId)
+      setDenuncia(updatedData)
+      setIsAnimating(true)
+
+      setTimeout(() => {
+        setIsAnimating(false)
+      }, 3500)
+    } catch (err) {
+      console.error('Erro ao atualizar status:', err)
+      setUpdateError(err.mensagem || err.message || 'Falha ao atualizar o estado da denúncia.')
+    } finally {
+      setUpdatingStatus(false)
+    }
   }
 
   const isAnonymous = !denuncia?.nome && !denuncia?.email && !denuncia?.telefone
@@ -121,14 +135,12 @@ export default function DetalheDenuncia() {
               />
 
               <ProcessTrackingCard
-                selectedStatus={selectedStatus}
-                onStatusChange={setSelectedStatus}
-                onConfirm={handleConfirmStatus}
+                status={denuncia.status}
+                onUpdateStatus={handleUpdateStatus}
+                updating={updatingStatus}
+                isAnimating={isAnimating}
+                updateError={updateError}
               />
-
-              <p className="text-sm text-[var(--color-text)]">
-                Status confirmado: <strong>{PROCESS_STATUS_LABELS[confirmedStatus] || confirmedStatus}</strong>
-              </p>
             </div>
 
             <div>

@@ -129,15 +129,7 @@ public class dashboardService {
         return denunciaJpaRepository.relatorio(pageable);
     }
 
-    public denunciaDto detalheDenuncia(long id) {
-        denunciaEntity denuncia = denunciaJpaRepository.findById(id);
-        if (denuncia == null) {
-            throw new regraNegocioException("Denúncia não encontrada", HttpStatus.BAD_REQUEST);
-        }
 
-        return denunciaMapper.toDto(denuncia);
-
-    }
 
 
 }

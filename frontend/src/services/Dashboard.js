@@ -90,7 +90,7 @@ export const getDashboardRelatorio = async (page = 0) => {
 
 export const getDashboardDenunciaById = async (id) => {
     try {
-        const response = await api.get(`/dashboard/denuncia/${id}`);
+        const response = await api.get(`/denuncias/detalhe/${id}`);
         return response.data;
     } catch (error) {
         if (error.response && error.response.data && error.response.data.mensagem) {
@@ -104,4 +104,16 @@ export const getDashboardDenunciaById = async (id) => {
 
 export const getDenunciaDetalhe = getDashboardDenunciaById;
 
-
+export const atualizarStatusDenuncia = async (id) => {
+    try {
+        const response = await api.get(`/denuncias/atualizarStatus/${id}`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (atualizar status):', error.response.data.mensagem);
+            throw error.response.data;
+        }
+        console.error('Erro ao atualizar status da denuncia:', error);
+        throw error;
+    }
+};

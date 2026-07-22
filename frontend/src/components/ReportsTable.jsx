@@ -24,7 +24,8 @@ const getStatusBadge = (status) => {
     'CONCLUIDA': { label: 'Concluída', className: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
     'RESOLVIDO': { label: 'Resolvido', className: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
     'EM_ANALISE': { label: 'Em Análise', className: 'bg-blue-100 text-blue-800 border-blue-200' },
-    'PENDENTE': { label: 'Pendente', className: 'bg-amber-100 text-amber-800 border-amber-200' }
+    'PENDENTE': { label: 'Pendente', className: 'bg-amber-100 text-amber-800 border-amber-200' },
+    'ARQUIVADA': { label: 'Arquivada', className: 'bg-slate-100 text-slate-800 border-slate-200' }
   }
   const config = styles[status] || { label: status, className: 'bg-gray-100 text-gray-800 border-gray-200' }
   return (
@@ -33,6 +34,7 @@ const getStatusBadge = (status) => {
     </span>
   )
 }
+
 
 const formatDate = (dateString) => {
   if (!dateString) return '-'

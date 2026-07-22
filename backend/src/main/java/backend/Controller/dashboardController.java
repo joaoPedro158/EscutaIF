@@ -86,11 +86,7 @@ public class dashboardController {
         return ResponseEntity.status(HttpStatus.OK).body(relatorios);
     }
 
-    @GetMapping("/denuncia/{id}")
-    public ResponseEntity<?> denunciaDetalhe(@PathVariable long id) {
-        denunciaDto denuncia = dashboardService.detalheDenuncia(id);
-        return ResponseEntity.status(HttpStatus.OK).body(denuncia);
-    }
+
 
 
 

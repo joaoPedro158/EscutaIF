@@ -53,8 +53,20 @@ public class denunciaService {
         statusDenuncia novoStatus = statusAtual.proximo();
 
         denunciaModel.setStatus(novoStatus);
+        denunciaEntity entity = denunciaMapper.toEntity(denunciaModel);
+        denunciaEntity savedEntity = denunciaJpaRepository.save(entity);
 
-        return denunciaMapper.toDto(denunciaModel);
+        return denunciaMapper.toDto(savedEntity);
+
+    }
+
+    public denunciaDto detalheDenuncia(long id) {
+        denunciaEntity denuncia = denunciaJpaRepository.findById(id);
+        if (denuncia == null) {
+            throw new regraNegocioException("Denúncia não encontrada", HttpStatus.BAD_REQUEST);
+        }
+
+        return denunciaMapper.toDto(denuncia);
 
     }
 }

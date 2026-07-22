@@ -29,4 +29,10 @@ public class denunciaController {
         denunciaDto dto = denunciaService.atualizarStatus(id);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
+
+    @GetMapping("detalhe/{id}")
+    public ResponseEntity<?> denunciaDetalhe(@PathVariable long id) {
+        denunciaDto denuncia = denunciaService.detalheDenuncia(id);
+        return ResponseEntity.status(HttpStatus.OK).body(denuncia);
+    }
 }

@@ -14,6 +14,50 @@ export const PROCESS_STATUS_MESSAGES = {
   ARQUIVADA: 'O processo foi arquivado após a conclusão do fluxo de apuração.',
 }
 
+export const PROCESS_STATUS_COLORS = {
+  PENDENTE: {
+    label: 'Pendente',
+    bg: 'bg-amber-100',
+    text: 'text-amber-800',
+    border: 'border-amber-200',
+    badgeBg: 'bg-amber-50',
+    hex: '#f59e0b',
+    stepBg: 'bg-amber-500',
+    ring: 'border-amber-300',
+  },
+  EM_ANALISE: {
+    label: 'Em Análise',
+    bg: 'bg-blue-100',
+    text: 'text-blue-800',
+    border: 'border-blue-200',
+    badgeBg: 'bg-blue-50',
+    hex: '#3b82f6',
+    stepBg: 'bg-blue-500',
+    ring: 'border-blue-300',
+  },
+  CONCLUIDA: {
+    label: 'Concluída',
+    bg: 'bg-emerald-100',
+    text: 'text-emerald-800',
+    border: 'border-emerald-200',
+    badgeBg: 'bg-emerald-50',
+    hex: '#10b981',
+    stepBg: 'bg-emerald-500',
+    ring: 'border-emerald-300',
+  },
+  ARQUIVADA: {
+    label: 'Arquivada',
+    bg: 'bg-slate-100',
+    text: 'text-slate-800',
+    border: 'border-slate-200',
+    badgeBg: 'bg-slate-50',
+    hex: '#64748b',
+    stepBg: 'bg-slate-500',
+    ring: 'border-slate-300',
+  },
+}
+
+
 export const detalheDenunciaMock = {
   protocolo: '8492-23',
   tipoDenuncia: 'Assédio Moral',
