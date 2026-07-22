@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class relatorioDto {
+    private long id;
     private String nome;
     private tipoDenuncia tipoDenuncia;
     private statusDenuncia status;
