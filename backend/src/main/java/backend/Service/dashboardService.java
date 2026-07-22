@@ -6,16 +6,20 @@ import backend.Enum.humor;
 import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
 import backend.Model.Dto.dashboard.*;
+import backend.Model.Dto.denunciaDto;
+import backend.Model.Mapper.denunciaMapper;
+import backend.Repository.Entity.denunciaEntity;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
-
+import backend.exceptions.regraNegocioException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -30,6 +34,8 @@ public class dashboardService {
 
     private final acolhimentoJpaRepository acolhimentoJpaRepository;
     private final denunciaJpaRepository denunciaJpaRepository;
+
+    private final denunciaMapper denunciaMapper;
 
     public countDto count(curso curso, Integer periodo, tipoDenuncia tipoDenuncia) {
         long qtdAcolhimento = acolhimentoJpaRepository.contarAcolhimentos(curso, periodo);
@@ -120,5 +126,15 @@ public class dashboardService {
         );
 
         return denunciaJpaRepository.relatorio(pageable);
+    }
+
+    public denunciaDto detalheDenuncia(long id) {
+        denunciaEntity denuncia = denunciaJpaRepository.findById(id);
+        if (denuncia == null) {
+            throw new regraNegocioException("Denúncia não encontrada", HttpStatus.BAD_REQUEST);
+        }
+
+        return denunciaMapper.toDto(denuncia);
+
     }
 }

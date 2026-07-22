@@ -21,6 +21,7 @@ function AppRoutes() {
                 <Route path={ROUTES.DENUNCIA} element={<Denuncia />} />
                 <Route path={ROUTES.CADASTRA} element={<Cadastra />} />
                 <Route path={ROUTES.DENUNCIA_DETALHE} element={<DetalheDenuncia />} />
+                <Route path={`${ROUTES.DENUNCIA_DETALHE}/:id`} element={<DetalheDenuncia />} />
                 <Route path="*" element={<Navigate to="/login" replace />} />
 
                 <Route element={<ProtectedRoute />}>

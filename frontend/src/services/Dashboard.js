@@ -88,3 +88,20 @@ export const getDashboardRelatorio = async (page = 0) => {
     }
 };
 
+export const getDashboardDenunciaById = async (id) => {
+    try {
+        const response = await api.get(`/dashboard/denuncia/${id}`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.mensagem) {
+            console.error('Erro do backend (denuncia detalhe):', error.response.data.mensagem);
+            throw error.response.data;
+        }
+        console.error('Erro ao buscar detalhe da denuncia:', error);
+        throw error;
+    }
+};
+
+export const getDenunciaDetalhe = getDashboardDenunciaById;
+
+

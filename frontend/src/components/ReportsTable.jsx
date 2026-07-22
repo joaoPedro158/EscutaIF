@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeft, ChevronRight, Loader2, ExternalLink } from 'lucide-react'
 import { getDashboardRelatorio } from '../services/Dashboard'
 
 const getTipoDenunciaBadge = (tipo) => {
@@ -45,6 +46,7 @@ const formatDate = (dateString) => {
 }
 
 export default function ReportsTable() {
+  const navigate = useNavigate()
   const [page, setPage] = useState(0)
   const [reportsData, setReportsData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -122,23 +124,40 @@ export default function ReportsTable() {
               <th className="py-3 px-4 font-semibold">Status</th>
               <th className="py-3 px-4 font-semibold">Data do Incidente</th>
               <th className="py-3 px-4 font-semibold">Data de Criação</th>
+              <th className="py-3 px-4 font-semibold text-right">Ação</th>
             </tr>
           </thead>
           <tbody>
             {!loading && reports.length === 0 ? (
               <tr>
-                <td colSpan="5" className="py-8 text-center text-[#3d4943]">
+                <td colSpan="6" className="py-8 text-center text-[#3d4943]">
                   Nenhum relatório encontrado.
                 </td>
               </tr>
             ) : (
               reports.map((report, idx) => (
-                <tr key={idx} className="border-b border-[#f0eee9] hover:bg-[#fbf9f4] transition-colors">
+                <tr
+                  key={idx}
+                  onClick={() => report.id && navigate(`/denuncia/detalhe/${report.id}`)}
+                  className="border-b border-[#f0eee9] hover:bg-[#fbf9f4] transition-colors cursor-pointer"
+                >
                   <td className="py-3 px-4 font-medium text-[#1b1c19]">{report.nome || '-'}</td>
                   <td className="py-3 px-4">{getTipoDenunciaBadge(report.tipoDenuncia)}</td>
                   <td className="py-3 px-4">{getStatusBadge(report.status)}</td>
                   <td className="py-3 px-4 text-[#3d4943]">{formatDate(report.dataIncidente)}</td>
                   <td className="py-3 px-4 text-[#3d4943]">{formatDate(report.criado_em)}</td>
+                  <td className="py-3 px-4 text-right">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (report.id) navigate(`/denuncia/detalhe/${report.id}`)
+                      }}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#00694c] hover:underline"
+                    >
+                      <span>Ver</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  </td>
                 </tr>
               ))
             )}

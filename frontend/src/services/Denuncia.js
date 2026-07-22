@@ -38,3 +38,15 @@ export const enviarDenuncia = async (formData) => {
     throw new Error(error.message || 'Erro de conexão com o servidor.');
   }
 };
+
+export const getDenunciaById = async (id) => {
+  try {
+    const resposta = await axios.get(`/api/dashboard/denuncia/${id}`);
+    return resposta.data;
+  } catch (error) {
+    if (error.response) {
+      throw error.response.data;
+    }
+    throw new Error(error.message || 'Erro de conexão com o servidor.');
+  }
+};

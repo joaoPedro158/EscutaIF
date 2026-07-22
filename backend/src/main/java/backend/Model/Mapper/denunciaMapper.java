@@ -12,4 +12,5 @@ public interface denunciaMapper {
     denuncia toModel(denunciaRecord denunciaRecord);
     denunciaEntity toEntity(denuncia denunciaModel);
     denunciaDto toDto(denuncia denunciaModel);
+    denunciaDto toDto(denunciaEntity entity);
 }

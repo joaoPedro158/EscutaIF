@@ -1,6 +1,6 @@
-import { Shield } from 'lucide-react'
+import { Shield, User, Mail, Phone } from 'lucide-react'
 
-export default function IdentificationDataCard({ isAnonymous }) {
+export default function IdentificationDataCard({ isAnonymous, nome, email, telefone }) {
   return (
     <aside className="rounded-3xl border border-[var(--color-soft-line)] bg-white p-6 shadow-[var(--shadow-card)]">
       <div className="space-y-6">
@@ -20,8 +20,39 @@ export default function IdentificationDataCard({ isAnonymous }) {
               protocolo gerado.
             </p>
           </div>
-        ) : null}
+        ) : (
+          <div className="space-y-4 rounded-xl border border-[#e4e2de] bg-[var(--color-surface)] p-5">
+            {nome && (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text)]">
+                  <User className="size-3.5" />
+                  <span>Nome</span>
+                </div>
+                <p className="text-base font-medium text-[var(--color-heading)]">{nome}</p>
+              </div>
+            )}
+            {email && (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text)]">
+                  <Mail className="size-3.5" />
+                  <span>E-mail</span>
+                </div>
+                <p className="text-base font-medium text-[var(--color-heading)] break-all">{email}</p>
+              </div>
+            )}
+            {telefone && (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text)]">
+                  <Phone className="size-3.5" />
+                  <span>Telefone</span>
+                </div>
+                <p className="text-base font-medium text-[var(--color-heading)]">{telefone}</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </aside>
   )
 }
+
