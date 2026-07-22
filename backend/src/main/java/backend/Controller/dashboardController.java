@@ -92,4 +92,6 @@ public class dashboardController {
         return ResponseEntity.status(HttpStatus.OK).body(denuncia);
     }
 
+
+
 }

@@ -8,6 +8,7 @@ import backend.Enum.tipoDenuncia;
 import backend.Model.Dto.dashboard.*;
 import backend.Model.Dto.denunciaDto;
 import backend.Model.Mapper.denunciaMapper;
+import backend.Model.denuncia;
 import backend.Repository.Entity.denunciaEntity;
 import backend.Repository.acolhimentoJpaRepository;
 import backend.Repository.denunciaJpaRepository;
@@ -137,4 +138,6 @@ public class dashboardService {
         return denunciaMapper.toDto(denuncia);
 
     }
+
+
 }

@@ -7,7 +7,9 @@ import backend.Model.Mapper.denunciaMapper;
 import backend.Model.denuncia;
 import backend.Repository.Entity.denunciaEntity;
 import backend.Repository.denunciaJpaRepository;
+import backend.exceptions.regraNegocioException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,5 +39,22 @@ public class denunciaService {
         denunciaEntity savedEntity = denunciaJpaRepository.save(entity);
         denunciaModel.setId(savedEntity.getId());
         return denunciaMapper.toDto(denunciaModel);
+    }
+
+
+    public denunciaDto atualizarStatus(long id) {
+        denunciaEntity denuncia = denunciaJpaRepository.findById(id);
+        if (denuncia == null) {
+            throw new regraNegocioException("Denúncia não encontrada", HttpStatus.BAD_REQUEST);
+        }
+        denuncia denunciaModel = denunciaMapper.toModel(denuncia);
+
+        statusDenuncia statusAtual = denunciaModel.getStatus();
+        statusDenuncia novoStatus = statusAtual.proximo();
+
+        denunciaModel.setStatus(novoStatus);
+
+        return denunciaMapper.toDto(denunciaModel);
+
     }
 }
