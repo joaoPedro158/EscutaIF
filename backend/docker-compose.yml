@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # 1. Configuração do Banco de Dados
+  banco-escutaif:
+    image: postgres:14
+    container_name: escutaif-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: adm
+      POSTGRES_DB: escuta_if
+    ports:
+      - "5432:5432"
+
+  # 2. Configuração do seu Backend
+  api-backend:
+    image: escutaif-api-backend:1.0
+    container_name: escutaif-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - banco-escutaif # Diz ao Docker para ligar o banco antes da API
+    environment:
+      # Aqui o Spring se conecta usando o nome do container do banco!
+      SPRING_DATASOURCE_URL: jdbc:postgresql://banco-escutaif:5432/escuta_if
+
+  frontend-web:
+    build: ../frontend
+    container_name: escutaif-frontend
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - api-backend
