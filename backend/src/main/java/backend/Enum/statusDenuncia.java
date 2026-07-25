@@ -25,11 +25,10 @@ public enum statusDenuncia {
     ARQUIVADA {
         @Override
         public statusDenuncia proximo() {
-            // 💡 Mensagem corrigida para refletir o estado correto
+
             throw new regraNegocioException("Esta denúncia já está arquivada e atingiu o estágio final.", HttpStatus.BAD_REQUEST);
         }
     };
 
-    // Método abstrato que força cada constante a implementar sua transição
     public abstract statusDenuncia proximo();
 }

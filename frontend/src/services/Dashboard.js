@@ -72,10 +72,10 @@ export const getDashboardCategoriaGrafico = async () => {
     }
 };
 
-export const getDashboardRelatorio = async (page = 0) => {
+export const getDashboardRelatorio = async (page = 0, statusDenuncia = '') => {
     try {
         const response = await api.get('/dashboard/relatorio', {
-            params: { page }
+            params: { page, statusDenuncia }
         });
         return response.data;
     } catch (error) {

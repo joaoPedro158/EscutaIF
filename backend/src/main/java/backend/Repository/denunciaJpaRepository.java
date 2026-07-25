@@ -39,8 +39,12 @@ public interface denunciaJpaRepository extends JpaRepository<denunciaEntity, Lon
     List<Object[]> QuantidadePorTipo();
 
     @Query("select new backend.Model.Dto.dashboard.relatorioDto(" +
-            "d.id, d.nome, d.tipoDenuncia, d.status, d.criado_em, d.dataIncidente) from denunciaEntity d")
-    Page<relatorioDto> relatorio(Pageable pageable);
+            "d.id, d.nome, d.tipoDenuncia, d.status, d.criado_em, d.dataIncidente) from denunciaEntity d" +
+            " where (:statusDenuncia is null or d.status = :statusDenuncia)")
+    Page<relatorioDto> relatorio(
+            Pageable pageable,
+            @Param("statusDenuncia") statusDenuncia statusDenuncia
+    );
 
     denunciaEntity findById(long id);
 }

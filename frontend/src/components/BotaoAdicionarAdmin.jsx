@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import iconeMais from '../assets/icon/icon-16.svg';
+import iconeMais from '../assets/icon/Icon-16.svg';
 import { ROUTES } from '../enum/rotas';
 
 const BotaoAdicionarAdmin = ({ onClick }) => {

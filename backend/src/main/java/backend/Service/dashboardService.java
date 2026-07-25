@@ -118,7 +118,7 @@ public class dashboardService {
         return categorias;
     }
 
-    public Page<relatorioDto> relatorio(int pagina) {
+    public Page<relatorioDto> relatorio(int pagina, statusDenuncia statusDenuncia) {
 
         Pageable pageable = PageRequest.of(
                 pagina,
@@ -126,7 +126,7 @@ public class dashboardService {
                 Sort.by("criado_em").descending()
         );
 
-        return denunciaJpaRepository.relatorio(pageable);
+        return denunciaJpaRepository.relatorio(pageable, statusDenuncia);
     }
 
 

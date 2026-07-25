@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, Loader2, ExternalLink } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Loader2, ExternalLink, Filter } from 'lucide-react'
 import { getDashboardRelatorio } from '../services/Dashboard'
 
 const getTipoDenunciaBadge = (tipo) => {
@@ -35,7 +35,6 @@ const getStatusBadge = (status) => {
   )
 }
 
-
 const formatDate = (dateString) => {
   if (!dateString) return '-'
   const date = new Date(dateString)
@@ -50,6 +49,7 @@ const formatDate = (dateString) => {
 export default function ReportsTable() {
   const navigate = useNavigate()
   const [page, setPage] = useState(0)
+  const [statusFilter, setStatusFilter] = useState('')
   const [reportsData, setReportsData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -59,7 +59,7 @@ export default function ReportsTable() {
       setLoading(true)
       setError(null)
       try {
-        const data = await getDashboardRelatorio(page)
+        const data = await getDashboardRelatorio(page, statusFilter)
         setReportsData(data)
       } catch (err) {
         console.error('Erro ao carregar relatórios:', err)
@@ -70,13 +70,18 @@ export default function ReportsTable() {
     }
 
     fetchRelatorios()
-  }, [page])
+  }, [page, statusFilter])
 
   const reports = reportsData?.content || []
   const totalPages = reportsData?.totalPages || 0
   const isFirst = reportsData?.first ?? (page === 0)
   const isLast = reportsData?.last ?? (totalPages > 0 ? page >= totalPages - 1 : true)
   const totalElements = reportsData?.totalElements || 0
+
+  const handleStatusFilterChange = (newStatus) => {
+    setStatusFilter(newStatus)
+    setPage(0)
+  }
 
   const handlePrevPage = () => {
     if (!isFirst && page > 0) {
@@ -96,13 +101,63 @@ export default function ReportsTable() {
 
   return (
     <div className="rounded-2xl bg-white p-6 border border-[#f0eee9] shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-        <h3 className="text-lg font-semibold text-[#1b1c19]">Relatórios</h3>
-        {totalElements > 0 && (
-          <span className="text-xs font-medium text-[#3d4943] bg-[#fbf9f4] px-3 py-1 rounded-full border border-[#f0eee9]">
-            Total: {totalElements} registros
-          </span>
-        )}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+        <div>
+          <h3 className="text-lg font-semibold text-[#1b1c19]">Relatórios</h3>
+          <p className="text-xs text-[#3d4943] mt-0.5">Filtre as denúncias por status de acompanhamento</p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {totalElements > 0 && (
+            <span className="text-xs font-medium text-[#3d4943] bg-[#fbf9f4] px-3 py-1.5 rounded-full border border-[#f0eee9]">
+              Total: {totalElements} registros
+            </span>
+          )}
+
+          {/* Select filter dropdown */}
+          <div className="relative min-w-[170px]">
+            <select
+              value={statusFilter}
+              onChange={(e) => handleStatusFilterChange(e.target.value)}
+              className="w-full appearance-none rounded-xl border border-[#f0eee9] bg-[#fbf9f4] px-3.5 py-1.5 pr-8 text-xs font-semibold text-[#1b1c19] hover:bg-white focus:outline-none transition-colors cursor-pointer"
+            >
+              <option value="">Todos os Status</option>
+              <option value="PENDENTE">Pendente</option>
+              <option value="EM_ANALISE">Em Análise</option>
+              <option value="CONCLUIDA">Concluída</option>
+              <option value="ARQUIVADA">Arquivada</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-[#3d4943]">
+              <Filter className="w-3.5 h-3.5 text-[#00694c]" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Status Filter Pills */}
+      <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1 scrollbar-none">
+        {[
+          { key: '', label: 'Todos' },
+          { key: 'PENDENTE', label: 'Pendente' },
+          { key: 'EM_ANALISE', label: 'Em Análise' },
+          { key: 'CONCLUIDA', label: 'Concluída' },
+          { key: 'ARQUIVADA', label: 'Arquivada' },
+        ].map((item) => {
+          const isActive = statusFilter === item.key
+          return (
+            <button
+              key={item.key}
+              onClick={() => handleStatusFilterChange(item.key)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border whitespace-nowrap cursor-pointer ${
+                isActive
+                  ? 'bg-[#00694c] text-white border-[#00694c] shadow-xs'
+                  : 'bg-white text-[#3d4943] border-[#f0eee9] hover:bg-[#fbf9f4]'
+              }`}
+            >
+              {item.label}
+            </button>
+          )
+        })}
       </div>
 
       {error && (
@@ -112,6 +167,7 @@ export default function ReportsTable() {
       )}
 
       <div className="overflow-x-auto relative min-h-[250px]">
+
         {loading && (
           <div className="absolute inset-0 bg-white/70 backdrop-blur-xs flex items-center justify-center z-10">
             <Loader2 className="w-8 h-8 text-[#00694c] animate-spin" />

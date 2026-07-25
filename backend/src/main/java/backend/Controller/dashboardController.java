@@ -3,6 +3,7 @@ package backend.Controller;
 import backend.Controller.Route.rotas;
 import backend.Enum.curso;
 import backend.Enum.humor;
+import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
 import backend.Model.Dto.dashboard.*;
 import backend.Model.Dto.denunciaDto;
@@ -80,9 +81,11 @@ public class dashboardController {
 
     @GetMapping("/relatorio")
     public ResponseEntity<?> relatorio(
-            @RequestParam(defaultValue = "0") int page
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) statusDenuncia statusDenuncia
+
     ) {
-        Page<relatorioDto> relatorios = dashboardService.relatorio(page);
+        Page<relatorioDto> relatorios = dashboardService.relatorio(page, statusDenuncia);
         return ResponseEntity.status(HttpStatus.OK).body(relatorios);
     }
 
