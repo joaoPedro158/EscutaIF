@@ -11,6 +11,8 @@ services:
       POSTGRES_DB: escuta_if
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   # 2. Configuração do seu Backend
   api-backend:
@@ -32,3 +34,6 @@ services:
 
     depends_on:
       - api-backend
+
+volumes:
+  pgdata:
