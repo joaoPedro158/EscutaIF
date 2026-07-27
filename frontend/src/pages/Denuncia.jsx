@@ -3,7 +3,18 @@ import MobileLayout from '../layout/MobileLayout'
 import { AlertCircle, CheckCircle } from 'lucide-react'
 import { enviarDenuncia } from '../services/Denuncia'
 
+const getTodayDate = () => {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
 function Denuncia() {
+  const todayDate = getTodayDate()
+
   const [formData, setFormData] = useState({
     identificationType: 'anonima',
     type: '',
@@ -16,6 +27,7 @@ function Denuncia() {
     telefone: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [dateError, setDateError] = useState('')
 
   const denunciationTypes = [
     { value: 'assedio', label: 'Assédio' },
@@ -27,6 +39,11 @@ function Denuncia() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    if (name === 'eventDate') {
+      setDateError('')
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -42,6 +59,11 @@ function Denuncia() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (formData.eventDate && formData.eventDate > todayDate) {
+      setDateError('A data do incidente não pode ser posterior ao dia atual.')
+      return
+    }
 
     try {
       await enviarDenuncia(formData)
@@ -59,6 +81,7 @@ function Denuncia() {
           email: '',
           telefone: '',
         })
+        setDateError('')
       }, 3000)
     } catch (error) {
       console.error('Erro ao enviar denúncia:', error)
@@ -185,8 +208,15 @@ function Denuncia() {
                   name="eventDate"
                   value={formData.eventDate}
                   onChange={handleChange}
+                  max={todayDate}
+                  aria-invalid={Boolean(dateError)}
                   className="w-full rounded-lg border border-[rgba(188,202,193,0.3)] bg-white px-4 py-3 text-[#1b1c19] focus:outline-none focus:ring-2 focus:ring-[#fcaa33]"
                 />
+                {dateError && (
+                  <p className="mt-2 text-sm text-red-600" role="alert">
+                    {dateError}
+                  </p>
+                )}
               </div>
 
               {/* Event Location */}
