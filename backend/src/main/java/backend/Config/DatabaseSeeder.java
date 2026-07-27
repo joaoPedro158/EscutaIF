@@ -1,13 +1,21 @@
 package backend.Config;
 
 import backend.Enum.*;
+import backend.Model.Dto.Record.admRecord;
 import backend.Repository.Entity.acolhimentoEntity;
+import backend.Repository.Entity.admEntity;
 import backend.Repository.Entity.denunciaEntity;
 import backend.Repository.acolhimentoJpaRepository;
+import backend.Repository.admJpaRepository;
 import backend.Repository.denunciaJpaRepository;
+import backend.Service.admService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +23,8 @@ import java.util.List;
 import java.util.Random;
 
 @Configuration
+@AllArgsConstructor
+@NoArgsConstructor
 public class DatabaseSeeder {
 
     private static final tipoDenuncia[] TIPOS_DENUNCIA = tipoDenuncia.values();
@@ -36,14 +46,26 @@ public class DatabaseSeeder {
             "Ocorrencia de violencia psicologica em um espaco compartilhado."
     };
 
+
+    private admService admService;
+
     @Bean
     CommandLineRunner seedDatabase (
             acolhimentoJpaRepository acolhimentoJpaRepository,
-            denunciaJpaRepository denunciaJpaRepository
+            denunciaJpaRepository denunciaJpaRepository,
+            admJpaRepository admJpaRepository,
+            admService admService
     ) {
         return args -> {
             if (acolhimentoJpaRepository.count() > 0 || denunciaJpaRepository.count() > 0) {
                 System.out.println("ℹBanco de dados já possui registros. Semeador ignorado.");
+
+                if ( admJpaRepository.findByEmail("admin@exemplo.com").isEmpty() ) {
+
+                    admRecord admRecord = new admRecord(
+                            "Admin", "admin@exemplo.com", "12345678", "12345678");
+                    admService.salvarAdm(admRecord);
+                }
                 return;
             }
 
@@ -101,7 +123,12 @@ public class DatabaseSeeder {
 
             }
 
+
             denunciaJpaRepository.saveAll(denuncias);
+
+
+
+
         };
     }
 
