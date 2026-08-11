@@ -36,10 +36,10 @@ public class securityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/dashboard/**").authenticated()
                         .requestMatchers("/error").permitAll()
               
-                        // 2. Todo o restante das rotas (como os gráficos) exigirão o Token JWT
+
                         .anyRequest().authenticated()
                 )
-                // O PULO DO GATO: Executa o seu filtro customizado de JWT antes do padrão do Spring
+
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

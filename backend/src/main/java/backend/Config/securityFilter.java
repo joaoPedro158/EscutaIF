@@ -32,19 +32,15 @@ public class securityFilter extends OncePerRequestFilter {
             String email = tokenService.validarToken(token);
 
             if (email != null) {
-                // Busca o administrador no banco para confirmar a existência dele
                 var admin = repository.findByEmail(email)
                         .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-                // Cria o objeto de autenticação oficial do Spring Security (sem mapear roles complexas por enquanto)
                 var authentication = new UsernamePasswordAuthenticationToken(admin, null, java.util.Collections.emptyList());
 
-                // Salva essa autenticação no contexto do Spring para essa requisição específica
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
 
-        // Continua mandando a requisição para frente na esteira do Spring
+
         filterChain.doFilter(request, response);
     }
 
@@ -53,6 +49,6 @@ public class securityFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return null;
         }
-        return authHeader.replace("Bearer ", ""); // Remove a palavra 'Bearer ' e deixa só a hash
+        return authHeader.replace("Bearer ", "");
     }
 }

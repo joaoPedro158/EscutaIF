@@ -36,14 +36,12 @@ public class RestExceptionHandle  {
         if (ex.getCause() instanceof InvalidFormatException invalidFormat) {
             if (invalidFormat.getTargetType().isEnum()) {
 
-                // pega os valores aceitos pelo enum
                 String valoresAceitos = Arrays.stream(invalidFormat.getTargetType().getEnumConstants())
                         .map(Object::toString)
                         .collect(Collectors.joining(", "));
 
-                // pega o campo que veio errado
                 String campo = invalidFormat.getPathReference()
-                        .replaceAll("[\"\\[\\]]", "")  // remove aspas e colchetes
+                        .replaceAll("[\"\\[\\]]", "")
                         .replaceAll(".*\\.", "");
 
                 mensagem = String.format(

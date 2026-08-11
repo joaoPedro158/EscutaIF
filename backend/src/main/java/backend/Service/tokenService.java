@@ -1,6 +1,5 @@
 package backend.Service;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -18,11 +17,17 @@ public class tokenService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.issuer}")
+    private String issuer;
+
+    @Value("${jwt.expiration}")
+    private Integer expirationHours;
+
     public String gerarToken(String email) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("auth-api")
+                    .withIssuer(issuer)
                     .withSubject(email)
                     .withExpiresAt(gerarDataExpiracao())
                     .sign(algorithm);
@@ -35,7 +40,7 @@ public class tokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer(issuer)
                     .build()
                     .verify(token)
                     .getSubject();
@@ -45,7 +50,8 @@ public class tokenService {
     }
 
     private Instant gerarDataExpiracao() {
-
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now()
+                .plusHours(expirationHours)
+                .toInstant(ZoneOffset.of("-03:00"));
     }
 }
