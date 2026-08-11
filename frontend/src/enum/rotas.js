@@ -6,6 +6,7 @@ export const ROUTES = {
   LOGIN: '/login',
   ACOLHIMENTO: '/acolhimento',
   DENUNCIA: '/denuncia',
+  DENUNCIA_DETALHE: '/denuncia/detalhe',
   DASHBOARD: '/dashboard',
-  CADASTRA: '/cadastra',
+  CADASTRA: '/adm',
 };

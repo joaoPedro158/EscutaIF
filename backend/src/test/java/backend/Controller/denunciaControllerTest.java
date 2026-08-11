@@ -4,13 +4,13 @@ import backend.Controller.Route.rotas;
 import backend.Enum.tipoDenuncia;
 import backend.Model.Dto.Record.denunciaRecord;
 import backend.Repository.denunciaJpaRepository;
-import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@WithMockUser
 public class denunciaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private denunciaJpaRepository repository;
@@ -43,50 +41,55 @@ public class denunciaControllerTest {
 
     @Test
     public void deveSalvarDenunciaValidaComCamposOpcionaisPreenchidos() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                tipoDenuncia.ASSEDIO,
-                "Descrição do assédio ocorrido no corredor do bloco A",
-                LocalDateTime.of(2026, 6, 29, 10, 0),
-                "Bloco A",
-                "João da Silva",
-                "Maria Souza",
-                "maria@exemplo.com",
-                "123456789"
-        );
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente ocorrido no setor de operações.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central - Sala 3",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11999999999"
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isOk())
+                .content(json))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.tipoDenuncia", is("ASSEDIO")))
-                .andExpect(jsonPath("$.descricao", is("Descrição do assédio ocorrido no corredor do bloco A")))
-                .andExpect(jsonPath("$.local", is("Bloco A")))
-                .andExpect(jsonPath("$.pessoaAfetada", is("João da Silva")))
-                .andExpect(jsonPath("$.nome", is("Maria Souza")))
-                .andExpect(jsonPath("$.email", is("maria@exemplo.com")))
-                .andExpect(jsonPath("$.telefone", is("123456789")));
+                .andExpect(jsonPath("$.descricao", is("Relato detalhado do incidente ocorrido no setor de operações.")))
+                .andExpect(jsonPath("$.dataIncidente", is("2026-06-29T10:43:00")))
+                .andExpect(jsonPath("$.local", is("Escritório Central - Sala 3")))
+                .andExpect(jsonPath("$.pessoaAfetada", is("Anonimo")))
+                .andExpect(jsonPath("$.nome", is("João da Silva")))
+                .andExpect(jsonPath("$.email", is("joao.silva@email.com")))
+                .andExpect(jsonPath("$.telefone", is("11999999999")));
 
         assertEquals(1, repository.count());
     }
 
     @Test
     public void deveSalvarDenunciaValidaComCamposOpcionaisNulosETratarPessoaAfetadaComoAnonimo() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                tipoDenuncia.DISCRIMINACAO,
-                "Descrição da discriminação sofrida",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        String json = """
+                {
+                  "tipoDenuncia": "DISCRIMINACAO",
+                  "descricao": "Descrição da discriminação sofrida",
+                  "dataIncidente": null,
+                  "local": null,
+                  "pessoaAfetada": null,
+                  "nome": null,
+                  "email": null,
+                  "telefone": null
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isOk())
+                .content(json))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.tipoDenuncia", is("DISCRIMINACAO")))
                 .andExpect(jsonPath("$.descricao", is("Descrição da discriminação sofrida")))
@@ -99,79 +102,216 @@ public class denunciaControllerTest {
 
     @Test
     public void deveSalvarDenunciaValidaComPessoaAfetadaVaziaETratarComoAnonimo() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                tipoDenuncia.VIOLENCIA,
-                "Descrição da violência",
-                null,
-                null,
-                "   ",
-                null,
-                null,
-                null
-        );
+        String json = """
+                {
+                  "tipoDenuncia": "VIOLENCIA",
+                  "descricao": "Descrição da violência",
+                  "dataIncidente": null,
+                  "local": null,
+                  "pessoaAfetada": "   ",
+                  "nome": null,
+                  "email": null,
+                  "telefone": null
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isOk())
+                .content(json))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.pessoaAfetada", is("Anonimo")));
     }
 
     @Test
     public void deveRetornarBadRequestQuandoTipoDenunciaForNulo() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                null,
-                "Descrição da denúncia",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        String json = """
+                {
+                  "tipoDenuncia": null,
+                  "descricao": "Descrição da denúncia",
+                  "dataIncidente": null,
+                  "local": null,
+                  "pessoaAfetada": null,
+                  "nome": null,
+                  "email": null,
+                  "telefone": null
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isBadRequest());
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("tipoDenuncia: Tipo de denuncia e obrigatorio")));
     }
 
     @Test
     public void deveRetornarBadRequestQuandoDescricaoForVazia() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                tipoDenuncia.OUTRO,
-                "",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        String json = """
+                {
+                  "tipoDenuncia": "OUTRO",
+                  "descricao": "",
+                  "dataIncidente": null,
+                  "local": null,
+                  "pessoaAfetada": null,
+                  "nome": null,
+                  "email": null,
+                  "telefone": null
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isBadRequest());
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("descricao")));
     }
 
     @Test
     public void deveRetornarBadRequestTemporarioQuandoDescricaoForEmBranco() throws Exception {
-        denunciaRecord record = new denunciaRecord(
-                tipoDenuncia.OUTRO,
-                "   ",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        String json = """
+                {
+                  "tipoDenuncia": "OUTRO",
+                  "descricao": "   ",
+                  "dataIncidente": null,
+                  "local": null,
+                  "pessoaAfetada": null,
+                  "nome": null,
+                  "email": null,
+                  "telefone": null
+                }
+                """;
 
         mockMvc.perform(post(rotas.DENUNCIAS + "/form")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(record)))
-                .andExpect(status().isBadRequest());
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("descricao")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoTelefoneNaoForNumerico() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente ocorrido no setor de operações.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central - Sala 3",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11-9999-9999"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("telefone")))
+                .andExpect(jsonPath("$.mensagem", containsString("apenas números")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoEmailNaoTiverFormatoValido() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente ocorrido no setor de operações.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central - Sala 3",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "email-invalido",
+                  "telefone": "11999999999"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("email")))
+                .andExpect(jsonPath("$.mensagem", containsString("inválido")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoRequisicaoNaoForJsonValido() throws Exception {
+        String corpoInvalido = "isso não é json";
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(corpoInvalido))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", is("Valor inválido no corpo da requisição")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoTelefoneMenorQueMinimo() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "123456789"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("telefone")))
+                .andExpect(jsonPath("$.mensagem", containsString("entre 10 e 15")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoTelefoneMaiorQueMaximo() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "2026-06-29T10:43:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11111111111111111"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("telefone")))
+                .andExpect(jsonPath("$.mensagem", containsString("entre 10 e 15")));
+    }
+
+    @Test
+    public void deveRetornarBadRequestQuandoDataIncidenteForFutura() throws Exception {
+        String json = """
+                {
+                  "tipoDenuncia": "ASSEDIO",
+                  "descricao": "Relato detalhado do incidente.",
+                  "dataIncidente": "3026-01-01T00:00:00",
+                  "local": "Escritório Central",
+                  "pessoaAfetada": null,
+                  "nome": "João da Silva",
+                  "email": "joao.silva@email.com",
+                  "telefone": "11999999999"
+                }
+                """;
+
+        mockMvc.perform(post(rotas.DENUNCIAS + "/form")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensagem", containsString("dataIncidente")))
+                .andExpect(jsonPath("$.mensagem", containsString("não pode ser uma data futura")));
     }
 }

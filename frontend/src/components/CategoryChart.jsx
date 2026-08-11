@@ -1,14 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
-const data = [
-  { category: 'Saúde Mental', value: 32 },
-  { category: 'Assédio', value: 28 },
-  { category: 'Discriminação', value: 24 },
-  { category: 'Financeiro', value: 18 },
-  { category: 'Acadêmico', value: 15 }
-]
-
-export default function CategoryChart() {
+export default function CategoryChart({ data = [] }) {
   return (
     <div className="rounded-2xl bg-white p-6 border border-[#f0eee9]">
       <h3 className="text-lg font-semibold text-[#1b1c19] mb-6">Categorias de Denúncias</h3>

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  banco-escutaif:
+    image: postgres:14
+    container_name: escutaif-db
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+  api-backend:
+    image: escutaif-api-backend:1.0
+    container_name: escutaif-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - banco-escutaif
+    env_file:
+      - .env
+    environment:
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://banco-escutaif:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
+  frontend-web:
+    build: ../frontend
+    container_name: escutaif-frontend
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - api-backend
+
+volumes:
+  pgdata:

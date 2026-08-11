@@ -1,5 +1,6 @@
 package backend.Model;
 
+import backend.Enum.statusDenuncia;
 import backend.Enum.tipoDenuncia;
 import java.time.LocalDateTime;
 import lombok.*;
@@ -19,4 +20,5 @@ public class denuncia {
     private String nome;
     private String email;
     private String telefone;
+    private statusDenuncia status;
 }

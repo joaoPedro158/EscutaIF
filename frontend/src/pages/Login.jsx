@@ -4,23 +4,60 @@ import LoginBackground from '../components/login/LoginBackground'
 import LoginBrand from '../components/login/LoginBrand'
 import LoginCard from '../components/login/LoginCard'
 import LoginPrivacyMessage from '../components/login/LoginPrivacyMessage'
+import { validarLogin, logarUsuario } from '../services/Login'
 
 function Login() {
   const navigate = useNavigate()
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    senha: '',
   })
+  const [errors, setErrors] = useState({})
+  const [submitError, setSubmitError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (event) => {
     const { id, value } = event.target
     setFormData((current) => ({ ...current, [id]: value }))
+
+    // Limpa erro do campo modificado
+    if (errors[id]) {
+      setErrors((prev) => ({ ...prev, [id]: '' }))
+    }
+    // Limpa erro geral
+    setSubmitError('')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    navigate('/dashboard')
+    setSubmitError('')
+
+    // Validação local no frontend
+    const errosValidacao = validarLogin(formData)
+    if (Object.keys(errosValidacao).length > 0) {
+      setErrors(errosValidacao)
+      return
+    }
+
+    setLoading(true)
+    try {
+      await logarUsuario(formData)
+      
+      // Redireciona para o Dashboard em caso de sucesso
+      navigate('/dashboard')
+    } catch (err) {
+      console.error('Erro ao realizar o login:', err)
+      
+      // Trata erros vindos do backend (ex: Email ou senha inválidos)
+      if (err && err.mensagem) {
+        setSubmitError(err.mensagem)
+      } else {
+        setSubmitError(err.message || 'Erro ao conectar-se com o servidor.')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -39,6 +76,9 @@ function Login() {
             onSubmit={handleSubmit}
             passwordVisible={passwordVisible}
             onTogglePassword={() => setPasswordVisible((current) => !current)}
+            errors={errors}
+            submitError={submitError}
+            loading={loading}
           />
 
           <LoginPrivacyMessage />

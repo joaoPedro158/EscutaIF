@@ -1,15 +1,8 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
-const COLORS = ['#00694c', '#fcaa33', '#e8724d', '#ff6b6b']
+const COLORS = ['#ef4444', '#f97316', '#9ca3af', '#84cc16', '#22c55e'];
 
-const data = [
-  { name: 'Positivo', value: 45 },
-  { name: 'Neutro', value: 30 },
-  { name: 'Moderado', value: 15 },
-  { name: 'Crítico', value: 10 }
-]
-
-export default function SentimentChart() {
+export default function SentimentChart({ data = [] }) {
   return (
     <div className="rounded-2xl bg-white p-6 border border-[#f0eee9]">
       <h3 className="text-lg font-semibold text-[#1b1c19] mb-6">Distribuição de Sentimentos</h3>
