@@ -60,13 +60,15 @@ public class DatabaseSeeder {
             if (acolhimentoJpaRepository.count() > 0 || denunciaJpaRepository.count() > 0) {
                 System.out.println("ℹBanco de dados já possui registros. Semeador ignorado.");
 
-                if ( admJpaRepository.findByEmail("admin@exemplo.com").isEmpty() ) {
 
-                    admRecord admRecord = new admRecord(
-                            "Admin", "admin@exemplo.com", "12345678", "12345678");
-                    admService.salvarAdm(admRecord);
-                }
                 return;
+            }
+
+            if ( admJpaRepository.findByEmail("admin@exemplo.com").isEmpty() ) {
+
+                admRecord admRecord = new admRecord(
+                        "Admin", "admin@exemplo.com", "12345678", "12345678");
+                admService.salvarAdm(admRecord);
             }
 
             Random random = new Random();
