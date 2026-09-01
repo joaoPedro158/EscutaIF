@@ -17,6 +17,48 @@ Este README documenta principalmente o **backend**: sua arquitetura, camadas e o
 | Build | Maven (`mvnw`) |
 | Infra | Docker / docker-compose |
 
+## Stack do frontend
+
+| Camada | Tecnologia |
+|---|---|
+| Biblioteca / Framework | React 19 |
+| Build tool | Vite |
+| Estilização | Tailwind CSS 4 |
+| Roteamento | React Router |
+| Requisições HTTP | Axios |
+| Gráficos (dashboard) | Recharts |
+| Ícones | Lucide React |
+| Lint | ESLint |
+| Infra | Docker + Nginx |
+
+## Screenshots
+
+<!-- Adicione aqui capturas de tela da interface (login, formulário de acolhimento, dashboard, etc.) -->
+
+### Dashboard
+
+<p align="center">
+  <img width="1908" height="2234" alt="Dashboard" src="https://github.com/user-attachments/assets/2b95372b-26c1-4f1c-a1b8-673b6f17b497" />
+</p>
+
+### Denúncia
+
+<p align="center">
+  <img width="1908" height="1294" alt="Denúncia" src="https://github.com/user-attachments/assets/6c7a858c-21c4-4433-b5dd-133a74b1e83b" />
+</p>
+
+### Acolhimento
+
+<p align="center">
+  <img width="1908" height="1646" alt="Acolhimento" src="https://github.com/user-attachments/assets/db3029ce-69a8-4bd7-b6ef-8ef1b2927475" />
+</p>
+
+### Home
+
+<p align="center">
+  <img width="1908" height="1192" alt="Home" src="https://github.com/user-attachments/assets/fe2aa323-ffca-41c0-b889-1c1b20f4bbd1" />
+</p>
+
 ## Arquitetura
 
 O backend segue uma **arquitetura em camadas (layered architecture)** próxima do padrão MVC de APIs REST, com uma separação explícita entre o modelo de domínio e o modelo de persistência:
@@ -84,4 +126,3 @@ docker-compose up --build
 ```
 
 O `docker-compose.yml` sobe três serviços: banco PostgreSQL, API Spring Boot (porta `8080`) e frontend (porta `3000`), com variáveis sensíveis carregadas de um arquivo `.env`.
-
